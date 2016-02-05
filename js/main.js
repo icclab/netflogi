@@ -58,15 +58,15 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   };
   this.getNeutronPorts = function(fn) {
     var data = [
-      { id: "1c7811dc-e0b1-4d1e-9089-c203df328157", macAddress: "fa:16:3e:47:47:00", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.2"}],
-      { id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", macAddress: "fa:16:3e:a0:25:f2", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.4"}],
-      { id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", macAddress: "fa:16:3e:5d:02:57", ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.3"}],
-      { id: "3cac74fd-f24d-4b40-8344-1a86af85113e", macAddress: "fa:16:3e:bb:a4:ca", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.1"}],
-      { id: "78058861-9079-4b9e-925f-81f4a0ac3e27", macAddress: "fa:16:3e:62:b4:f2", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.7"}],
-      { id: "7fc1733c-f8d3-47cf-b755-0b08374a0e55", macAddress: "fa:16:3e:bb:1f:e0", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.4"}],
-      { id: "8075c307-4df9-4421-b65b-b2d871f83f56", macAddress: "fa:16:3e:3d:36:b6", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.3"}],
-      { id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", macAddress: "fa:16:3e:79:75:3f", ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.2"}],
-      { id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", macAddress: "fa:16:3e:e1:2c:58", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.5"}]
+      { id: "1c7811dc-e0b1-4d1e-9089-c203df328157", macAddress: "fa:16:3e:47:47:00", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.2"}]},
+      { id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", macAddress: "fa:16:3e:a0:25:f2", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.4"}]},
+      { id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", macAddress: "fa:16:3e:5d:02:57", ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.3"}]},
+      { id: "3cac74fd-f24d-4b40-8344-1a86af85113e", macAddress: "fa:16:3e:bb:a4:ca", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.1"}]},
+      { id: "78058861-9079-4b9e-925f-81f4a0ac3e27", macAddress: "fa:16:3e:62:b4:f2", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.7"}]},
+      { id: "7fc1733c-f8d3-47cf-b755-0b08374a0e55", macAddress: "fa:16:3e:bb:1f:e0", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.4"}]},
+      { id: "8075c307-4df9-4421-b65b-b2d871f83f56", macAddress: "fa:16:3e:3d:36:b6", ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.3"}]},
+      { id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", macAddress: "fa:16:3e:79:75:3f", ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.2"}]},
+      { id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", macAddress: "fa:16:3e:e1:2c:58", ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.5"}]}
     ];
     fn(data);
   };
