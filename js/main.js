@@ -7,9 +7,9 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
       controller:'HomeController',
       templateUrl:'html/home.html',
     })
-    .when('/service', {
-      controller:'ServiceController',
-      templateUrl:'html/service.html',
+    .when('/service-function-chaining', {
+      controller:'ServiceFunctionChainingController',
+      templateUrl:'html/service-function-chaining.html',
     })
     .when('/connection', {
       controller:'ConnectionController',
@@ -31,23 +31,54 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
       redirectTo:'/'
     });
 })
+.service('netfloc', function($http) {
+  var that = this;
+  var configurated = false;
+  var settings = {
+    url: {
+      createServiceChain: 'admin:admin@127.0.0.1:8181/restconf/operations/netfloc:create-service-chain'
+    }
+  };
+  this.config = function(options) {
+    if (configurated) { return that; }
+    _.extend(settings, options); configurated = true;
+    return that;
+  };
+  this.createServiceChain = function(neutronPorts, fn) {
+    $http({
+      method: 'POST',
+      url: settings.url,
+      data: {
+        "input": {
+          "neutron-ports": neutronPorts
+        }
+      }
+    }).then(fn);
+    return that;
+  };
+})
 .controller('MainController', function($scope) {
   $scope.menu=[
     {href:"#/topology" , label:"Topology" },
     {href:"#/logs" , label:"Logs" }
   ];
-  $scope.menuService = {label:"Service" , menu: [{href:"#/servicefunctionchaining" , label:"Service Function Chaining"} , {href:"#/chainpattern" , label:"Chain Pattern" }]};
+  $scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/chainpattern" , label:"Chain Pattern" }]};
   $scope.menuConnection = {label:"Connection" , menu: [{href:"#/flowpath" , label:"Flow Path" } , {href:"#/flowpattern" , label:"Flow Pattern" }] };
   $scope.menuBridges = {label:"Bridges" , menu: [{href:"#/subbridges" , label:"Bridges" } , {href:"#/bridgepattern" , label:"Bridge Pattern" }]};
-
+  $scope.menuTopology = {};
+  $scope.menuLogs = {};
   console.log("MainController");
 })
 .controller('HomeController', function($scope) {
   console.log("HomeController");
   $scope.introduction="blabla";
 })
-.controller('ServiceController', function() {
-  console.log("ServiceController");
+.controller('ServiceFunctionChainingController', function($scope, netfloc) {
+  $scope.neutronPorts = "";
+  $scope.createServiceChain = function() {
+    netfloc.createServiceChain($scope.neutronPorts, function() {});
+  }
+  console.log("ServiceFunctionChainingController");
 })
 .controller('ConnectionController', function() {
   console.log("ConnectionController");

@@ -29,7 +29,7 @@
 
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li uib-dropdown class="dropdown" ng-model="menuService">
+							<li uib-dropdown class="dropdown">
 								<a role="button" uib-dropdown-toggle>{{menuService.label}} <span class="caret"></span></a>
 								<ul class="dropdown-menu" ng-if="menuService.menu">
 									<li ng-repeat="subitem in menuService.menu">
@@ -37,7 +37,7 @@
 									</li>
 								</ul>
 							</li>
-							<li uib-dropdown class="dropdown" ng-model="menuConnection">
+							<li uib-dropdown class="dropdown">
 								<a role="button" uib-dropdown-toggle>{{menuConnection.label}} <span class="caret"></span></a>
 								<ul class="dropdown-menu" ng-if="menuConnection.menu">
 									<li ng-repeat="subitem in menuConnection.menu">
@@ -45,13 +45,19 @@
 									</li>
 								</ul>
 							</li>
-							<li uib-dropdown class="dropdown" ng-model="menuBridges">
+							<li uib-dropdown class="dropdown">
 								<a role="button" uib-dropdown-toggle>{{menuBridges.label}} <span class="caret"></span></a>
 								<ul class="dropdown-menu" ng-if="menuBridges.menu">
 									<li ng-repeat="subitem in menuBridges.menu">
 										<a href="{{subitem.href}}">{{subitem.label}}</a>
 									</li>
 								</ul>
+							</li>
+							<li>
+								<a href="menuTopology.href">{{menuTopology.label}}</a>
+							</li>
+							<li>
+								<a href="menuLogs.href">{{menuLogs.label}}</a>
 							</li>
 						</ul>
 					</div>
