@@ -15,32 +15,32 @@
 	</head>
 	<body>
 		<div id="container" ng-controller="MainController">
-				<nav class="navbar navbar-default">
-					  <div class="container-fluid">
-					    <div class="navbar-header">
-					      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					        <span class="sr-only">Toggle navigation</span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					      </button>
-					      <a class="navbar-brand" href="#/">Netfloc</a>
-					    </div>
-					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					      <ul class="nav navbar-nav">
-									<li class="dropdown" ng-repeat="item in menu">
-					          <a href="{{item.href}}" data-toggle="dropdown" ng-class="{'dropdown-toggle': item.menu}">{{item.label}} <span class="caret"></span></a>
-					          <ul class="dropdown-menu" ng-if="item.menu">
-					            <li ng-repeat="subitem in item.menu">
-					              <a href="{{subitem.href}}">{{submenu.title}}</a>
-					            </li>
-					      		</ul>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#/">Netfloc</a>
+					</div>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li uib-dropdown class="dropdown" ng-model="menuService">
+								<a role="button" uib-dropdown-toggle>{{menuService.label}} <span class="caret"></span></a>
+								<ul class="dropdown-menu" ng-if="menuService.menu">
+									<li ng-repeat="subitem in menuService.menu">
+										<a href="{{subitem.href}}">{{subitem.label}}</a>
 									</li>
 								</ul>
-					    </div>
-					  </div>
-					</nav>
-							<div ng-view></div>
-						</div>
-					</body>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div ng-view></div>
+		</div>
+	</body>
 </html>

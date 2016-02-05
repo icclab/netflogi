@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute'])
+angular.module('app', ['ui.bootstrap', 'ngRoute'])
 
 .config(function($routeProvider) {
 
@@ -33,12 +33,12 @@ angular.module('app', ['ngRoute'])
 })
 .controller('MainController', function($scope) {
   $scope.menu=[
-    {href:"#/service" , label:"Service" , menu: [{href:"#/connection" , label:"Connection" }]},
     {href:"#/connection" , label:"Connection" },
     {href:"#/bridges" , label:"Bridges" },
     {href:"#/topology" , label:"Topology" },
     {href:"#/logs" , label:"Logs" }
-  ]
+  ];
+  $scope.menuService = {label:"Service" , menu: [{href:"#/connection" , label:"Connection" }]};
 
   console.log("MainController");
 })
@@ -65,3 +65,6 @@ angular.module('app', ['ngRoute'])
   console.log("LogsController");
 
 })
+
+
+
