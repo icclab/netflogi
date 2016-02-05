@@ -26,12 +26,29 @@
 						</button>
 						<a class="navbar-brand" href="#/">Netfloc</a>
 					</div>
+
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li uib-dropdown class="dropdown" ng-model="menuService">
 								<a role="button" uib-dropdown-toggle>{{menuService.label}} <span class="caret"></span></a>
 								<ul class="dropdown-menu" ng-if="menuService.menu">
 									<li ng-repeat="subitem in menuService.menu">
+										<a href="{{subitem.href}}">{{subitem.label}}</a>
+									</li>
+								</ul>
+							</li>
+							<li uib-dropdown class="dropdown" ng-model="menuConnection">
+								<a role="button" uib-dropdown-toggle>{{menuConnection.label}} <span class="caret"></span></a>
+								<ul class="dropdown-menu" ng-if="menuConnection.menu">
+									<li ng-repeat="subitem in menuConnection.menu">
+										<a href="{{subitem.href}}">{{subitem.label}}</a>
+									</li>
+								</ul>
+							</li>
+							<li uib-dropdown class="dropdown" ng-model="menuBridges">
+								<a role="button" uib-dropdown-toggle>{{menuBridges.label}} <span class="caret"></span></a>
+								<ul class="dropdown-menu" ng-if="menuBridges.menu">
+									<li ng-repeat="subitem in menuBridges.menu">
 										<a href="{{subitem.href}}">{{subitem.label}}</a>
 									</li>
 								</ul>

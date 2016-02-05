@@ -33,12 +33,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 })
 .controller('MainController', function($scope) {
   $scope.menu=[
-    {href:"#/connection" , label:"Connection" },
-    {href:"#/bridges" , label:"Bridges" },
     {href:"#/topology" , label:"Topology" },
     {href:"#/logs" , label:"Logs" }
   ];
-  $scope.menuService = {label:"Service" , menu: [{href:"#/connection" , label:"Connection" }]};
+  $scope.menuService = {label:"Service" , menu: [{href:"#/servicefunctionchaining" , label:"Service Function Chaining"} , {href:"#/chainpattern" , label:"Chain Pattern" }]};
+  $scope.menuConnection = {label:"Connection" , menu: [{href:"#/flowpath" , label:"Flow Path" } , {href:"#/flowpattern" , label:"Flow Pattern" }] };
+  $scope.menuBridges = {label:"Bridges" , menu: [{href:"#/subbridges" , label:"Bridges" } , {href:"#/bridgepattern" , label:"Bridge Pattern" }]};
 
   console.log("MainController");
 })
@@ -65,6 +65,3 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   console.log("LogsController");
 
 })
-
-
-
