@@ -27,6 +27,26 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
       controller:'LogsController',
       templateUrl:'html/logs.html',
     })
+    .when('/bridgepattern', {
+      controller:'BridgePatternController',
+      templateUrl:'html/bridgepatterns.html',
+    })
+    .when('/chainpattern', {
+      controller:'ChainPatternController',
+      templateUrl:'html/chainpatterns.html',
+    })
+    .when('/subbridges', {
+      controller:'SubBridgesController',
+      templateUrl:'html/subbridges.html',
+    })
+    .when('/flowpath', {
+      controller:'FlowPathController',
+      templateUrl:'html/flowpath.html',
+    })
+    .when('/flowpatterns', {
+      controller:'FlowPatternController',
+      templateUrl:'html/flowpatterns.html',
+    })
     .otherwise({
       redirectTo:'/'
     });
@@ -77,7 +97,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
     {href:"#/logs" , label:"Logs" }
   ];
   $scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/chainpattern" , label:"Chain Pattern" }]};
-  $scope.menuConnection = {label:"Connection" , menu: [{href:"#/flowpath" , label:"Flow Path" } , {href:"#/flowpattern" , label:"Flow Pattern" }] };
+  $scope.menuConnection = {label:"Connection" , menu: [{href:"#/flowpath" , label:"Flow Path" } , {href:"#/flowpatterns" , label:"Flow Pattern" }] };
   $scope.menuBridges = {label:"Bridges" , menu: [{href:"#/subbridges" , label:"Bridges" } , {href:"#/bridgepattern" , label:"Bridge Pattern" }]};
   $scope.menuTopology = {};
   $scope.menuLogs = {};
@@ -88,18 +108,39 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   $scope.introduction="blabla";
 })
 .controller('ServiceFunctionChainingController', function($scope, netfloc) {
-  $scope.neutronPorts = "";
+  $scope.neutronPorts = "" = .getNeutronPorts;
   $scope.createServiceChain = function() {
     netfloc.createServiceChain($scope.neutronPorts, function() {});
-  }
+  }//
   console.log("ServiceFunctionChainingController");
+
+})
+.controller('ChainPatternController', function() {
+  console.log("ChainPatternController");
+
 })
 .controller('ConnectionController', function() {
   console.log("ConnectionController");
 
 })
+.controller('FlowPathController', function() {
+  console.log("FlowPathController");
+
+})
+.controller('FlowPatternController', function() {
+  console.log("FlowPatternController");
+
+})
 .controller('BridgesController', function() {
   console.log("BridgesController");
+
+})
+.controller('SubBridgesController', function() {
+  console.log("SubBridgesController");
+
+})
+.controller('BridgePatternController', function() {
+  console.log("BridgePatternController");
 
 })
 .controller('TopologyController', function() {
