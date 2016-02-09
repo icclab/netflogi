@@ -56,7 +56,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   var configurated = false;
   var settings = {
     url: {
-      createServiceChain: 'admin:admin@127.0.0.1:8181/restconf/operations/netfloc:create-service-chain'
+      createServiceChain: '/api/create-service-chain'
     }
   };
   this.config = function(options) {
