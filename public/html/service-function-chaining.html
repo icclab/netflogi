@@ -1,2 +1,16 @@
 <h1>Service Function Chaining</h1>
-<label>Neutron Port List: <input type="text" ng-model="neutronPorts"></label><button class="btn btn-primary" ng-click="createServiceChain()">create</button><!DOCTYPE html>
+<table class="table">
+  <tbody>
+    <tr>
+      <th>id</th>
+      <th>macAddress</th>
+      <th>ips</th>
+      <th></th>
+    <tr ng-repeat="port in neutronPorts">
+      <td>{{ port.id }}</td>
+      <td>{{ port.macAddress }}</td>
+      <td>{{ port.ips }}</td>
+    </tr>
+  </tbody>
+</table>
+<label>Neutron Port List: <input type="text" ng-model="portInput"></label><button class="btn btn-primary" ng-click="createServiceChain()">create</button><!DOCTYPE html>

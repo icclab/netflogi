@@ -108,7 +108,9 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   $scope.introduction="blabla";
 })
 .controller('ServiceFunctionChainingController', function($scope, netfloc) {
-  $scope.neutronPorts = "" = .getNeutronPorts;
+  netfloc.getNeutronPorts(function(ports){
+    $scope.neutronPorts = ports;
+  })
   $scope.createServiceChain = function() {
     netfloc.createServiceChain($scope.neutronPorts, function() {});
   }//
