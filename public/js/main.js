@@ -109,8 +109,15 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 })
 .controller('ServiceFunctionChainingController', function($scope, netfloc) {
   netfloc.getNeutronPorts(function(ports){
-    $scope.neutronPorts = ports;
-  })
+    $scope.neutronPorts = _.map(ports, function(port) {
+      port.selectedOrder = 0;
+      return port;
+    });
+  });
+  $scope.maxChainOrder = 0;
+  $scope.getNumber = function(maxChainOrder) {
+    return new Array( maxChainOrder);
+  }
   $scope.createServiceChain = function() {
     netfloc.createServiceChain($scope.neutronPorts, function() {});
   }//
