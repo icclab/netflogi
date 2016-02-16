@@ -114,10 +114,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
       return port;
     });
   });
-  $scope.maxChainOrder = 0;
-  $scope.getNumber = function(maxChainOrder) {
-    return new Array( maxChainOrder);
-  }
+  $scope.maxChainOrderNr = 0;
+  $scope.applyMaxChainOrder = function() {
+    $scope.maxChainOrder = new Array($scope.maxChainOrderNr+1);
+    console.log("new maxChainOrder", $scope.maxChainOrder);
+  };
+  $scope.maxChainOrder = [null];
   $scope.createServiceChain = function() {
     netfloc.createServiceChain($scope.neutronPorts, function() {});
   }//
