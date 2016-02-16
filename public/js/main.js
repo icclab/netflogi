@@ -111,6 +111,9 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   netfloc.getNeutronPorts(function(ports){
     $scope.neutronPorts = _.map(ports, function(port) {
       port.selectedOrder = 0;
+      port.dropDownToggled = function(open) {
+        console.log("toggled", this, open);
+      };
       return port;
     });
   });
@@ -121,7 +124,10 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   };
   $scope.maxChainOrder = [null];
   $scope.createServiceChain = function() {
-    netfloc.createServiceChain($scope.neutronPorts, function() {});
+    var serviceChain = "";
+    // 
+    $scope.neutronPorts;
+    netfloc.createServiceChain(serviceChain, function() {});
   }//
   console.log("ServiceFunctionChainingController");
 

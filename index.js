@@ -39,6 +39,6 @@ app.post("/api/create-service-chain", function(req, res) {
 	postRequest.end();
 });
 
-app.listen(80, function() {
+app.listen(8080, function() {
 	console.log("listening on port 80");
 });
