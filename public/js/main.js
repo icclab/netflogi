@@ -124,9 +124,17 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   };
   $scope.maxChainOrder = [null];
   $scope.createServiceChain = function() {
-    var serviceChain = "";
-    // 
-    $scope.neutronPorts;
+    var serviceChain = _.filter($scope.neutronPorts, function(port){
+       return port.selectedOrder != 0;
+         });
+
+    console.log("filtered:", serviceChain);
+    serviceChain = _.sortBy(serviceChain, 'selectedOrder');
+   console.log("sorted:", serviceChain);
+
+    serviceChain = _.map(serviceChain, 'selectedOrder');
+    console.log("chained:", serviceChain);
+
     netfloc.createServiceChain(serviceChain, function() {});
   }//
   console.log("ServiceFunctionChainingController");
