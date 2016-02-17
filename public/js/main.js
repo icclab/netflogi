@@ -103,7 +103,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   $scope.menuLogs = {};
   console.log("MainController");
 })
-.controller('HomeController', function($scope) {
+.controller('HomeCoselectedOrderntroller', function($scope) {
   console.log("HomeController");
   $scope.introduction="blabla";
 })
@@ -132,10 +132,13 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
     serviceChain = _.sortBy(serviceChain, 'selectedOrder');
    console.log("sorted:", serviceChain);
 
-    serviceChain = _.map(serviceChain, 'selectedOrder');
+    serviceChain = _.map(serviceChain, function(neutronPort){
+      return neutronPort.id;
+    });
     console.log("chained:", serviceChain);
-
-    netfloc.createServiceChain(serviceChain, function() {});
+    var serviceChainString = serviceChain.join(",")
+    console.log("serviceChainString:", serviceChainString);
+    netfloc.createServiceChain(serviceChainString, function() {});
   }//
   console.log("ServiceFunctionChainingController");
 
