@@ -119,7 +119,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   });
   $scope.maxChainOrderNr = 0;
   $scope.applyMaxChainOrder = function() {
-    $scope.maxChainOrder = new Array($scope.maxChainOrderNr+1);
+    $scope.maxChainOrder = Array.apply(null, {length: $scope.maxChainOrderNr+1}).map(Number.call, Number);
     console.log("new maxChainOrder", $scope.maxChainOrder);
   };
   $scope.maxChainOrder = [null];
@@ -131,6 +131,13 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
   }//
   console.log("ServiceFunctionChainingController");
 
+  $scope.selectOrder = function(port, order) {
+    port.selectedOrder = order;
+    $scope.maxChainOrder = _.filter($scope.maxChainOrder, function(chainOrder) {
+      return chainOrder != order;
+    });
+    console.log("select order for port", order, port);
+  }
 })
 .controller('ChainPatternController', function() {
   console.log("ChainPatternController");
