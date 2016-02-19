@@ -70,7 +70,7 @@ var getToken = function() {
 		port: config.keystonePort,
 		//auth: config.auth,
 		method: "POST",
-		path: "/v2.0/ports",
+		path: "/v2.0/tokens",
 		headers: {
 			'Content-Type': 'application/json',
 			//'Content-Length': Buffer.byteLength(req.body)
