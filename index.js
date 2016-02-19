@@ -103,7 +103,7 @@ app.get("/api/neutron-ports", function(req, res) {
 		port: config.neutronPort,
 		//auth: config.auth,
 		method: "POST",
-		path: "/v2.0/ports",
+		path: "/v2.0/admin/ports",
 		headers: {
 			'Content-Type': 'application/json',
 			'X-Auth-Token:': token.access.token.id
