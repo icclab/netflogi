@@ -10,6 +10,7 @@
       </div>
       <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
       <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
+      <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
     </form>
   </div>
   <div class="col-md-8">
