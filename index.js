@@ -79,8 +79,8 @@ var getToken = function() {
 		console.log("keystone response");
 		keyStoneRes.on('data', function (chunk) {
 			console.log('Response: ' + chunk);
-			token = chunk;
-			console.log(token);
+			token = JSON.parse(chunk);
+			console.log("keystone token", token);
       	});
       	keyStoneRes.on("error", function(err) {
       		console.log("keystone error:res", err);
