@@ -98,12 +98,12 @@ getToken();
 
 app.get("/api/neutron-ports", function(req, res) {
 	console.log("/api/neutron-ports", req.body);
-	var postRequest = http.request({
+	var getRequest = http.request({
 		host: config.neutronHost,
 		port: config.neutronPort,
 		//auth: config.auth,
-		method: "POST",
-		path: "/v2.0/admin/ports",
+		method: "GET",
+		path: "/v2.0/ports",
 		headers: {
 			'Content-Type': 'application/json',
 			'X-Auth-Token:': token.access.token.id
@@ -118,12 +118,11 @@ app.get("/api/neutron-ports", function(req, res) {
       		console.log("neutron error:res", err);
       	});
 	})
-	postRequest.on("error", function(err) {
+	getRequest.on("error", function(err) {
 		console.log("neutron error:req", err);
 		res.send(err);
 	});
-	postRequest.write(JSON.stringify(req.body));
-	postRequest.end();
+	getRequest.end();
 });
 
 app.listen(3000, function() {
