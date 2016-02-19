@@ -1,5 +1,9 @@
 {
 	"host": "127.0.0.1",
 	"port": "8181",
-	"auth": "admin:admin"
+	"auth": "admin:admin",
+	"keystoneHost": "10.20.0.221",
+	"keystonePort": "5000",
+	"neutronHost": "10.20.0.221",
+	"neutronPort": "9696"
 }

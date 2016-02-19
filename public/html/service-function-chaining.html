@@ -1,5 +1,28 @@
 <h1>Service Function Chaining</h1>
-<input type="number" ng-model="maxChainOrderNr"><button ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply</button>
+<div class="row">
+  <div class="col-md-4">
+    <form>
+      <div class="form-group">
+        <label>
+          Number of Neutron Ports in the Chain
+          <input type="number" class="form-control" ng-model="maxChainOrderNr">
+        </label>
+      </div>
+      <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
+      <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
+    </form>
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
+        <div class="panel-heading">
+          <h3 class="panel-title">Service Chain {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '(valid)' : '(invalid)'; }}</h3>
+        </div>
+      <div class="panel-body">
+        {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "Empty" : getServiceChain(neutronPorts).join(","); }}
+      </div>
+    </div>
+  </div>
+</div>
 <table class="table">
   <tbody>
     <tr>
@@ -25,4 +48,3 @@
     </tr>
   </tbody>
 </table>
-<label>Neutron Port List: </label><button class="btn btn-primary" ng-click="createServiceChain()">create</button><!DOCTYPE html>
