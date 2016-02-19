@@ -106,7 +106,7 @@ app.get("/api/neutron-ports", function(req, res) {
 		path: "/v2.0/ports",
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Token ' + token
+			'X-Auth-Token:': token.access.token.id
       }
 	}, function(neutronRes) {
 		console.log("neutron response");
