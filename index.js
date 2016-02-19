@@ -23,6 +23,7 @@ var neutronPorts = [
 
 app.post("/api/service-chain", function(req, res) {
 	console.log("/api/service-chain", req.body);
+	var serviceChainString = "";
 	var postRequest = http.request({
 		host: config.host,
 		port: config.port,
@@ -37,11 +38,14 @@ app.post("/api/service-chain", function(req, res) {
 		console.log("netfloc response");
 		netflocRes.on('data', function (chunk) {
 			console.log('Response: ' + chunk);
-			res.status(200).send(chunk);
+			serviceChainString += chunk;
       	});
       	netflocRes.on("error", function(err) {
       		console.log("netfloc error:res", err);
       		res.status(500).send(err);
+      	});
+      	netflocRes.on("end", function() {
+      		res.status(200).send(serviceChainString);
       	});
 	})
 	postRequest.on("error", function(err) {
@@ -65,6 +69,7 @@ var keystone = {
 var token;
 
 var getToken = function() {
+	var tokenString = "";
 	var postRequest = http.request({
 		host: config.keystoneHost,
 		port: config.keystonePort,
@@ -79,11 +84,14 @@ var getToken = function() {
 		console.log("keystone response");
 		keyStoneRes.on('data', function (chunk) {
 			console.log('Response: ' + chunk);
-			token = JSON.parse(chunk);
-			console.log("keystone token", token);
+			tokenString += chunk;
       	});
       	keyStoneRes.on("error", function(err) {
       		console.log("keystone error:res", err);
+      	});
+      	keyStoneRes.on("end", function() {
+      		token = JSON.parse(tokenString);
+			console.log("keystone token", token);
       	});
 	})
 	postRequest.on("error", function(err) {
@@ -98,6 +106,7 @@ getToken();
 
 app.get("/api/neutron-ports", function(req, res) {
 	console.log("/api/neutron-ports", req.body);
+	var neutronPortList = "";
 	var getRequest = http.request({
 		host: config.neutronHost,
 		port: config.neutronPort,
@@ -111,10 +120,14 @@ app.get("/api/neutron-ports", function(req, res) {
 		console.log("neutron response");
 		neutronRes.on('data', function (chunk) {
 			console.log('Response: ' + chunk);
-			res.send(chunk);
+			neutronPortList += chunk;
       	});
       	neutronRes.on("error", function(err) {
       		console.log("neutron error:res", err);
+      		res.status(500).send(err);
+      	});
+      	neutronRes.on("end", function() {
+      		res.status(200).send(neutronPortList);
       	});
 	})
 	getRequest.on("error", function(err) {
