@@ -83,7 +83,6 @@ var getToken = function() {
 	}, function(keyStoneRes) {
 		console.log("keystone response");
 		keyStoneRes.on('data', function (chunk) {
-			console.log('Response: ' + chunk);
 			tokenString += chunk;
       	});
       	keyStoneRes.on("error", function(err) {
@@ -119,7 +118,6 @@ app.get("/api/neutron-ports", function(req, res) {
 	}, function(neutronRes) {
 		console.log("neutron response");
 		neutronRes.on('data', function (chunk) {
-			console.log('Response: ' + chunk);
 			neutronPortList += chunk;
       	});
       	neutronRes.on("error", function(err) {

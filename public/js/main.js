@@ -104,8 +104,8 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 
 	$scope.fetchNeutronPorts = function() {
 		netfloc.getNeutronPorts().then(function(ports){
-			console.log("neutron-ports", ports.data);
-			$scope.neutronPorts = _.map(ports.data, function(port) {
+			console.log("neutron-ports", ports.data.ports);
+			$scope.neutronPorts = _.map(ports.data.ports, function(port) {
 				port.selectedOrder = 0;
 				port.dropDownToggled = function(open) {
 					console.log("toggled", this, open);
