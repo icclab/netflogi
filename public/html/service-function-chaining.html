@@ -28,8 +28,8 @@
     <tr>
       <th>order</th>
       <th>id</th>
-      <th>macAddress</th>
-      <th>ips</th>
+      <th>mac_address</th>
+      <th>fixed_ips</th>
     </tr>
     <tr ng-repeat="port in neutronPorts">
       <td>
@@ -43,8 +43,8 @@
         </div>
       </td>
       <td>{{ port.id }}</td>
-      <td>{{ port.macAddress }}</td>
-      <td>{{ port.ips }}</td>
+      <td>{{ port.mac_address }}</td>
+      <td>{{ port.fixed_ips }}</td>
     </tr>
   </tbody>
 </table>
