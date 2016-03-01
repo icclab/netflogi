@@ -1,0 +1,31 @@
+<div class="container-fluid">
+<h1> Created Service Function Chains</h1>
+  <div class="row">
+    <div class="col-lg-6">
+      <p>{{ introductioncreatedsfcs }}</p>
+    </div>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>id</th>
+        <th>length</th>
+        <th>ports</th>
+      </tr>
+      <tr ng-repeat="port in neutronPorts">
+        <td>
+          <div class="btn-group" uib-dropdown on-toggle="port.dropDownToggled(open);" is-open="status.isopen">
+              {{ port.selectedOrder }} <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu aria-labelledby="single-button" >
+              <li ng-repeat="(idx, order) in maxChainOrder track by $index"><a ng-click="selectOrder(port, order)" role="button">{{ order }}</a></li>
+            </ul>
+          </div>
+        </td>
+        <td>{{ port.id }}</td>
+        <td>{{ port.mac_address }}</td>
+        <td>{{ port.fixed_ips }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

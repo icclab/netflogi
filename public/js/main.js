@@ -7,9 +7,17 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		controller:'HomeController',
 		templateUrl:'html/home.html',
 	})
+	.when('/services', {
+		controller:'ServicesController',
+		templateUrl:'html/services.html',
+	})
 	.when('/service-function-chaining', {
 		controller:'ServiceFunctionChainingController',
 		templateUrl:'html/service-function-chaining.html',
+	})
+	.when('/created-sfcs', {
+		controller:'CreatedSfcsController',
+		templateUrl:'html/created-sfcs.html',
 	})
 	.when('/connection', {
 		controller:'ConnectionController',
@@ -33,15 +41,15 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	})
 	.when('/chainpattern', {
 		controller:'ChainPatternController',
-		templateUrl:'html/chainpatterns.html',
+		templateUrl:'html/chainpatterns.hnetfloctml',
 	})
 	.when('/subbridges', {
 		controller:'SubBridgesController',
 		templateUrl:'html/subbridges.html',
 	})
-	.when('/flowpath', {
-		controller:'FlowPathController',
-		templateUrl:'html/flowpath.html',
+	.when('/networkpath', {
+		controller:'NetworkPathController',
+		templateUrl:'html/networkpath.html',
 	})
 	.when('/flowpatterns', {
 		controller:'FlowPatternController',
@@ -88,8 +96,8 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	{href:"#/topology" , label:"Topology" },
 	{href:"#/logs" , label:"Logs" }
 	];
-	$scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/chainpattern" , label:"Chain Pattern" }]};
-	$scope.menuConnection = {label:"Connection" , menu: [{href:"#/flowpath" , label:"Flow Path" } , {href:"#/flowpatterns" , label:"Flow Pattern" }] };
+	$scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/created-sfcs" , label:"Created SFCs" }, {href:"#/chainpattern" , label:"Chain Pattern" }]};
+	$scope.menuConnection = {label:"Connection" , menu: [{href:"#/networkpath" , label:"Network Path" } , {href:"#/flowpatterns" , label:"Flow Pattern" }] };
 	$scope.menuBridges = {label:"Bridges" , menu: [{href:"#/subbridges" , label:"Bridges" } , {href:"#/bridgepattern" , label:"Bridge Pattern" }]};
 	$scope.menuTopology = {};
 	$scope.menuLogs = {};
@@ -97,10 +105,11 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 })
 .controller('HomeController', function($scope) {
 	console.log("HomeController");
-	$scope.introduction="blabla";
+	$scope.introduction="NETwork FLOws for Clouds (Netfloc) is a framework for datacenter network programming. It is comprised of set of tools and libraries packed as Java bundles that interoperate with the OpenDaylight controller. Netfloc exposes REST API abstractions and Java interfaces for network programmers to enable optimal integration in cloud datacenters and fully SDN-enabled end-to-end management of OpenFlow enabled switches. For further information please follow this link : http://netfloc.readthedocs.org/en/latest/ ";
 })
 .controller('ServiceFunctionChainingController', function($scope, netfloc) {
 	console.log("ServiceFunctionChainingController");
+	$scope.introductionservicefunctionchaining="The function Service Function Chaining allows to get the number of Neutron Ports needed.";
 
 	$scope.fetchNeutronPorts = function() {
 		netfloc.getNeutronPorts().then(function(ports){
@@ -175,21 +184,30 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		console.log("select order for port", order, port);
 	};
 })
-.controller('ChainPatternController', function() {
+.controller('ServicesController', function() {
+	console.log("ServicesController");
+})
+.controller('CreatedSfcsController', function($scope) {
+	console.log("CreatedSfcsController");
+	$scope.introductioncreatedsfcs="Below, all the already created Service Function Chains are listed. If you haven't created a Service Function Chain yet, please create one now.";
+
+})
+.controller('ChainPatternController', function($scope) {
 	console.log("ChainPatternController");
+	$scope.introductionchainpattern="In the Chain Patterns section of the SFC service, the user will be offered the possibility to Create / Enable / Disable different chain patterns. Patterns are automatically applied to new service chains and generate the Open Flow messages for each of the bridges in the chain.";
 
 })
-.controller('ConnectionController', function() {
+.controller('ConnectionController', function($scope) {
 	console.log("ConnectionController");
+})
+.controller('NetworkPathController', function($scope) {
+	console.log("NetworkPathController");
+	$scope.introductionnetworkpath="The Network Graph creates Network Paths between Host Ports (provided by the Neutron API) to enable connection oriented flow programming. The Network Graph will currently only provide the shortest Network Path between two hosts by performing a BFS. A Network Path is a dynamic view onto a host-to-host connection and is not explicitly bound to OVS devices.";
 
 })
-.controller('FlowPathController', function() {
-	console.log("FlowPathController");
-
-})
-.controller('FlowPatternController', function() {
+.controller('FlowPatternController', function($scope) {
 	console.log("FlowPatternController");
-
+	$scope.introductionflowpattern="Flow Patterns are a parameterized structure which can be applied on Network Paths and are thus also segmented into source, destination and aggregation parts. Flow Patterns which are applied to Network Paths are dynamically maintained by Netfloc as long as the respective host-to-host connection is achievable.";
 })
 .controller('BridgesController', function() {
 	console.log("BridgesController");

@@ -95,7 +95,6 @@ var getToken = function() {
 	})
 	postRequest.on("error", function(err) {
 		console.log("keystone error:req", err);
-		res.send(err);
 	});
 	postRequest.write(JSON.stringify(keystone));
 	postRequest.end();
@@ -105,6 +104,10 @@ getToken();
 
 app.get("/api/neutron-ports", function(req, res) {
 	console.log("/api/neutron-ports", req.body);
+	if (_.isUndefined(token)){
+		res.status(500).send("keystone node connected");
+		return;
+	}
 	var neutronPortList = "";
 	var getRequest = http.request({
 		host: config.neutronHost,
@@ -135,6 +138,6 @@ app.get("/api/neutron-ports", function(req, res) {
 	getRequest.end();
 });
 
-app.listen(3000, function() {
+app.listen(80, function() {
 	console.log("listening on port 3000");
 });
