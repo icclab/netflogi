@@ -91,7 +91,10 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 })
-.controller('MainController', function($scope) {
+.controller('MainController', function($scope, $location) {
+	console.log('currentroute', $location.$$path);
+	$scope.main={};
+	$scope.main.hasnavigation = true;
 	$scope.menu=[
 	{href:"#/topology" , label:"Topology" },
 	{href:"#/logs" , label:"Logs" }
@@ -104,10 +107,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	console.log("MainController");
 })
 .controller('HomeController', function($scope) {
+	$scope.main.hasnavigation = false;
 	console.log("HomeController");
 	$scope.introduction="NETwork FLOws for Clouds (Netfloc) is a framework for datacenter network programming. It is comprised of set of tools and libraries packed as Java bundles that interoperate with the OpenDaylight controller. Netfloc exposes REST API abstractions and Java interfaces for network programmers to enable optimal integration in cloud datacenters and fully SDN-enabled end-to-end management of OpenFlow enabled switches. For further information please follow this link : http://netfloc.readthedocs.org/en/latest/ ";
 })
 .controller('ServiceFunctionChainingController', function($scope, netfloc) {
+	$scope.main.hasnavigation = true;
 	console.log("ServiceFunctionChainingController");
 	$scope.introductionservicefunctionchaining="The function Service Function Chaining allows to get the number of Neutron Ports needed.";
 
