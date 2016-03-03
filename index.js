@@ -1,10 +1,12 @@
 var _ = require("underscore"),
 	util = require("util"),
-	config = require("./config.json"),
+	config = {},
 	http = require("http"),
 	express = require('express'),
 	app = express(),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	fs = require('fs'),
+	prompt = require('prompt');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -25,9 +27,9 @@ app.post("/api/service-chain", function(req, res) {
 	console.log("/api/service-chain", req.body);
 	var serviceChainString = "";
 	var postRequest = http.request({
-		host: config.host,
-		port: config.port,
-		auth: config.auth,
+		host: config.netflocHost,
+		port: config.netflocPort,
+		auth: config.netflocAuth,
 		method: "POST",
 		path: "/restconf/operations/netfloc:create-service-chain",
 		headers: {
@@ -100,8 +102,6 @@ var getToken = function() {
 	postRequest.end();
 };
 
-getToken();
-
 app.get("/api/neutron-ports", function(req, res) {
 	console.log("/api/neutron-ports", req.body);
 	if (_.isUndefined(token)){
@@ -138,6 +138,38 @@ app.get("/api/neutron-ports", function(req, res) {
 	getRequest.end();
 });
 
-app.listen(80, function() {
-	console.log("listening on port 3000");
+var startServer = function() {
+	app.listen(config.guiPort, function() {
+		console.log("listening on port " + config.guiPort);
+	});
+	getToken();
+};
+
+var saveConfig = function(config) {
+	fs.writeFile('config.json', JSON.stringify(config, null, 4), function(err, res) {
+		console.log("save config err", err);
+		console.log("save config res", res);
+	});
+};
+
+fs.readFile('config.json', function(err, file) {
+	if (err) {
+		// file generieren
+		prompt.start();
+		prompt.get(["guiPort",
+			"netflocHost",
+			"netflocPort",
+			"netflocAuth",
+			"keystoneHost",
+			"keystonePort",
+			"neutronHost",
+			"neutronPort"], function(err, result) {
+				config = result;
+				saveConfig(config);
+				startServer();
+			});
+		return;
+	}
+	config = JSON.parse(file);
+	startServer();
 });
