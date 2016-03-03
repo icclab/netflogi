@@ -147,8 +147,9 @@ var startServer = function() {
 
 var saveConfig = function(config) {
 	fs.writeFile('config.json', JSON.stringify(config, null, 4), function(err, res) {
-		console.log("save config err", err);
-		console.log("save config res", res);
+		if (err) {
+			console.log("save config error", err);
+		}
 	});
 };
 
