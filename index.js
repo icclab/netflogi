@@ -96,7 +96,13 @@ var getToken = function() {
 	postRequest.on("error", function(err) {
 		console.log("keystone error:req", err);
 	});
-	postRequest.write(JSON.stringify(keystone));
+	postRequest.write(JSON.stringify({"auth": {
+        "passwordCredentials": {
+            "password": config.keystonePass,
+            "username": config.keystoneUser
+        },
+        "tenantName": config.keystoneTenant
+    }}));
 	postRequest.end();
 };
 
@@ -162,6 +168,9 @@ fs.readFile('config.json', function(err, file) {
 			"netflocAuth",
 			"keystoneHost",
 			"keystonePort",
+			"keystoneUser",
+			"keystonePass",
+			"keystoneTenant",
 			"neutronHost",
 			"neutronPort"], function(err, result) {
 				config = result;
