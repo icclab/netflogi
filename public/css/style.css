@@ -6,17 +6,18 @@ body.navbar-affixed-bottom { padding-bottom: 70px; }
 .navbar a { cursor: pointer; }
 
 /* For looks, following is not necessary, although I recommend including the statements for the search form */
-.navbar { 
-  border-radius: 0; 
+.navbar {
+  border-radius: 0;
   border-bottom: 1px solid #bbb;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  padding: 0px;
 }
 form[role=search], form[role=search]:before, form[role=search]:after {
   border: 0;
   box-shadow: none;
 }
-form[role=search] button, form[role=search] input { 
-  margin: 0; 
+form[role=search] button, form[role=search] input {
+  margin: 0;
   border-radius: 0px;
   border: 0;
 }
@@ -54,4 +55,22 @@ form[role=search] .form-group {
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
   }
+}
+container-fluid{
+  padding: 100px;
+}
+.form-control {
+    width: 30%;
+
+}
+.container-fluid {
+    padding-right: 55px;
+    padding-left: 55px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.primary-buttons{
+  transform: translate(81px, -54px);
+
 }

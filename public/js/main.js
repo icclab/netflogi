@@ -147,13 +147,13 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	};
 
 	$scope.chainIsValid = function(ports, maxChainOrder) {
-		return $scope.getServiceChain(ports).length >= 4
+		return $scope.getServiceChain(ports).length >= 2
 		&& maxChainOrder.length == 1
 		&& maxChainOrder[0] == 0;
 	};
 
 	$scope.maxChainOrderIsValid = function(nr) {
-		return nr >= 4 && nr % 2 == 0;
+		return nr >= 2 && nr % 1 == 0;
 	};
 
 	$scope.maxChainOrderNr = 0;

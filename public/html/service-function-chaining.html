@@ -7,10 +7,12 @@
           <input type="number" class="form-control" ng-model="maxChainOrderNr">
         </label>
       </div>
-      <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
-      <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
-      <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
-    </form>
+      <div class ="primary-buttons">
+        <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
+        <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
+      </div>
+    <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
+  -->  </form>
   </div>
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
@@ -26,12 +28,18 @@
 <table class="table">
   <tbody>
     <tr>
-      <th> Filter by order: <input type="text"></th>
-      <th> Filter by id: <input type="text"></th>
-      <th> Filter by mac_adress: <input type="text"></th>
-      <th> Filter by fixed_ips: <input type="text"></th>
+      <th>Filter by order: <input type="text"></th>
+      <th>Filter by id: <input type="text" ng-model="test1"></th>
+      <th>Filter by mac_adress: <input type="text" ng-model="test2"></th>
+      <th>Filter by fixed_ips: <br><input type="text" ng-model="test3"></th>
     </tr>
-    <tr>
+  <!--<ul>
+      <li ng-repeat="x in neutronPorts | filter:test">
+        {{ x }}
+      </li>
+    </ul>
+  </div>
+--><tr>
       <th>order</th>
       <th>id</th>
       <th>mac_address</th>
