@@ -196,7 +196,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 .controller('ServicesController', function() {
 	console.log("ServicesController");
 })
-.controller('Cr eatedSfcsController', function($scope) {
+.controller('CreatedSfcsController', function($scope) {
 	console.log("CreatedSfcsController");
 	$scope.introductioncreatedsfcs="Below, all the already created Service Function Chains are listed. If you haven't created a Service Function Chain yet, please create one now.";
 

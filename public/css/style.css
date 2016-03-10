@@ -75,5 +75,12 @@ container-fluid{
 
 }
 .alert{
-  
+
+}
+.navbar #nav-container .navbar-brand {
+  background-image: url("/netfloc_only_text.png");
+  background-size: 100px 40px;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 50px;
 }

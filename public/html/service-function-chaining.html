@@ -12,13 +12,13 @@
         <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
       </div>
     <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
-  -->
+
   <div class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <strong>Info!</strong> Please choose the number of Neutron Ports
-  </div>
+  </div>-->
 </form>
   </div>
   <div class="col-md-8">
@@ -35,15 +35,15 @@
 <table class="table">
   <tbody>
     <tr>
-      <th>Filter by order: <input ng-model="search.selectedOrder"></th>
-      <th>Filter by id: <input ng-model="search.id"></th>
-      <th>Filter by mac_adress: <input ng-model="search.mac_address"></th>
+      <th>Filter by order: <br><input ng-model="search.selectedOrder"></th>
       <th>Filter by fixed_ips: <br><input ng-model="search.fixed_ips"></th>
+      <th>Filter by mac_adress: <br><input ng-model="search.mac_address"></th>
+      <th>Filter by id: <br><input ng-model="search.id"></th>
     </tr>
       <th>order</th>
-      <th>id</th>
-      <th>mac_address</th>
       <th>fixed_ips</th>
+      <th>mac_address</th>
+      <th>id</th>
     </tr>
     <tr ng-repeat="port in neutronPorts | filter:search">
       <td>
@@ -56,9 +56,9 @@
           </ul>
         </div>
       </td>
-      <td>{{ port.id }}</td>
-      <td>{{ port.mac_address }}</td>
       <td>{{ port.fixed_ips }}</td>
+      <td>{{ port.mac_address }}</td>
+      <td>{{ port.id }}</td>
     </tr>
   </tbody>
 </table>
