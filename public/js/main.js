@@ -124,12 +124,14 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 				port.dropDownToggled = function(open) {
 					console.log("toggled", this, open);
 				};
+				port.ip = _.map(port.fixed_ips, function(fixed_ip){
+					return fixed_ip.ip_address;
+				}).join(",");
 				return port;
 			});
 		});
 	};
 	$scope.fetchNeutronPorts();
-
 	var clearNeutronPorts = function() {
 		$scope.neutronPorts = _.map($scope.neutronPorts, function(port) {
 			console.log(port);

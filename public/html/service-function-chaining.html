@@ -24,7 +24,7 @@
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
         <div class="panel-heading">
-          <h3 class="panel-title">Service Chain {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '' : ''; }}</h3>
+          <h3 class="panel-title">Service Chain summary {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '' : ''; }}</h3>
         </div>
       <div class="panel-body">
         {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "" : getServiceChain(neutronPorts).join(","); }}
@@ -36,7 +36,7 @@
   <tbody>
     <tr>
       <th>Filter by order: <br><input ng-model="search.selectedOrder"></th>
-      <th>Filter by fixed_ips: <br><input ng-model="search.fixed_ips"></th>
+      <th>Filter by fixed_ips: <br><input ng-model="search.ip"></th>
       <th>Filter by mac_adress: <br><input ng-model="search.mac_address"></th>
       <th>Filter by id: <br><input ng-model="search.id"></th>
     </tr>
@@ -56,7 +56,7 @@
           </ul>
         </div>
       </td>
-      <td>{{ port.fixed_ips[0].ip_address }}</td>
+      <td>{{ port.ip }}</td>
       <td>{{ port.mac_address }}</td>
       <td>{{ port.id }}</td>
     </tr>

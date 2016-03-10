@@ -12,7 +12,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 var neutronPorts = [
-	{ id: "1c7811dc-e0b1-4d1e-9089-c203df328157", mac_address: "fa:16:3e:47:47:00", fixed_ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.2"}]},
+	{ id: "1c7811dc-e0b1-4d1e-9089-c203df328157", mac_address: "fa:16:3e:47:47:00", fixed_ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.2"},{"subnet_id": "50d0g739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.14.12.4"}]},
 	{ id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", mac_address: "fa:16:3e:a0:25:f2", fixed_ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.4"}]},
 	{ id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", mac_address: "fa:16:3e:5d:02:57", fixed_ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.3"}]},
 	{ id: "3cac74fd-f24d-4b40-8344-1a86af85113e", mac_address: "fa:16:3e:bb:a4:ca", fixed_ips: [{"subnet_id": "fcd1456f-15dd-4e0b-9821-8036858a117c", "ip_address": "10.10.10.1"}]},
