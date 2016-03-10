@@ -182,17 +182,21 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	};
 
 	$scope.selectOrder = function(port, order) {
+		if(port.selectedOrder !== 0){
+			$scope.maxChainOrder.push(port.selectedOrder);
+		}
 		port.selectedOrder = order;
 		$scope.maxChainOrder = _.filter($scope.maxChainOrder, function(chainOrder) {
-			return chainOrder != order;
+			return chainOrder !== order || chainOrder === 0;
 		});
+		// sortieren reihenfolge
 		console.log("select order for port", order, port);
 	};
 })
 .controller('ServicesController', function() {
 	console.log("ServicesController");
 })
-.controller('CreatedSfcsController', function($scope) {
+.controller('Cr eatedSfcsController', function($scope) {
 	console.log("CreatedSfcsController");
 	$scope.introductioncreatedsfcs="Below, all the already created Service Function Chains are listed. If you haven't created a Service Function Chain yet, please create one now.";
 
@@ -232,5 +236,4 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 })
 .controller('LogsController', function() {
 	console.log("LogsController");
-
 })

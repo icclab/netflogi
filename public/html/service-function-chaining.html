@@ -12,15 +12,22 @@
         <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
       </div>
     <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
-  -->  </form>
+  -->
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
+  </div>
+</form>
   </div>
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
         <div class="panel-heading">
-          <h3 class="panel-title">Service Chain {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '(valid)' : '(invalid)'; }}</h3>
+          <h3 class="panel-title">Service Chain {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '' : ''; }}</h3>
         </div>
       <div class="panel-body">
-        {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "Empty" : getServiceChain(neutronPorts).join(","); }}
+        {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "" : getServiceChain(neutronPorts).join(","); }}
       </div>
     </div>
   </div>
@@ -28,24 +35,17 @@
 <table class="table">
   <tbody>
     <tr>
-      <th>Filter by order: <input type="text"></th>
-      <th>Filter by id: <input type="text" ng-model="test1"></th>
-      <th>Filter by mac_adress: <input type="text" ng-model="test2"></th>
-      <th>Filter by fixed_ips: <br><input type="text" ng-model="test3"></th>
+      <th>Filter by order: <input ng-model="search.selectedOrder"></th>
+      <th>Filter by id: <input ng-model="search.id"></th>
+      <th>Filter by mac_adress: <input ng-model="search.mac_address"></th>
+      <th>Filter by fixed_ips: <br><input ng-model="search.fixed_ips"></th>
     </tr>
-  <!--<ul>
-      <li ng-repeat="x in neutronPorts | filter:test">
-        {{ x }}
-      </li>
-    </ul>
-  </div>
---><tr>
       <th>order</th>
       <th>id</th>
       <th>mac_address</th>
       <th>fixed_ips</th>
     </tr>
-    <tr ng-repeat="port in neutronPorts">
+    <tr ng-repeat="port in neutronPorts | filter:search">
       <td>
         <div class="btn-group" uib-dropdown on-toggle="port.dropDownToggled(open);" is-open="status.isopen">
           <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
