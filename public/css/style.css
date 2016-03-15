@@ -121,4 +121,8 @@ body.modal-open,
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 4px 5px 3px 0px rgba(9, 9, 9, 0.43);
+    font-size: 22px;
+    height: 250px;
+    text-align: center;
+    width: auto;
 }
