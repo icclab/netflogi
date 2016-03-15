@@ -1,4 +1,4 @@
-<div class="row">
+  <!--<div class="row">
   <div class="col-md-4">
     <form>
       <div class="form-group">
@@ -7,10 +7,87 @@
           <input type="number" class="form-control" ng-model="maxChainOrderNr">
         </label>
       </div>
-      <div class ="primary-buttons">
-        <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
-        <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)">Create Service Chain</button>
-      </div>
+      <div class ="primary-buttons"> -->
+        <!--  <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button> -->
+        <div class="container">
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Service Function Chaining</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <form>
+                        <div class="form-group">
+                          <label>
+                            Number of Neutron Ports in the Chain
+                            <input type="number" class="form-control" ng-model="maxChainOrderNr">
+                          </label>
+                        </div>
+                        <div class ="primary-buttons">
+                          <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button>
+                        </div>
+                      <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
+
+                    <div class="alert alert-info">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong>Info!</strong> Please choose the number of Neutron Ports
+                    </div>-->
+                  </form>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">Service Chain summary {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '' : ''; }}</h3>
+                          </div>
+                        <div class="panel-body">
+                          {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "" : getServiceChain(neutronPorts).join(","); }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th>Filter by order: <br><input ng-model="search.selectedOrder"></th>
+                        <th>Filter by fixed_ips: <br><input ng-model="search.ip"></th>
+                        <th>Filter by mac_adress: <br><input ng-model="search.mac_address"></th>
+                        <th>Filter by id: <br><input ng-model="search.id"></th>
+                      </tr>
+                        <th>order</th>
+                        <th>fixed_ips</th>
+                        <th>mac_address</th>
+                        <th>id</th>
+                      </tr>
+                      <tr ng-repeat="port in neutronPorts | filter:search">
+                        <td>
+                          <div class="btn-group" uib-dropdown on-toggle="port.dropDownToggled(open);" is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                              {{ port.selectedOrder }} <span class="caret"></span>
+                            </button>
+                            <ul uib-dropdown-menu aria-labelledby="single-button" >
+                              <li ng-repeat="(idx, order) in maxChainOrder track by $index"><a ng-click="selectOrder(port, order)" role="button">{{ order }}</a></li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td>{{ port.ip }}</td>
+                        <td>{{ port.mac_address }}</td>
+                        <td>{{ port.id }}</td>
+                      </tr>
+                    </tbody>
+                  </table>          </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" ng-disabled="!chainIsValid(neutronPorts, maxChainOrder)" ng-click="createServiceChain(neutronPorts)" data-dismiss="modal">Create Service Chain</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
 
   <div class="alert alert-info">
@@ -19,8 +96,6 @@
     </button>
     <strong>Info!</strong> Please choose the number of Neutron Ports
   </div>-->
-</form>
-  </div>
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
         <div class="panel-heading">
@@ -34,31 +109,40 @@
 </div>
 <table class="table">
   <tbody>
-    <tr>
-      <th>Filter by order: <br><input ng-model="search.selectedOrder"></th>
-      <th>Filter by fixed_ips: <br><input ng-model="search.ip"></th>
-      <th>Filter by mac_adress: <br><input ng-model="search.mac_address"></th>
-      <th>Filter by id: <br><input ng-model="search.id"></th>
+      <th><form action="">
+              <input type="checkbox" name="" value="">Select All<br>
+          </form>
+    </th>
+      <th>Chain Id</th>
+      <th>Neutron-port order</th>
+      <th>Actions</th>
     </tr>
-      <th>order</th>
-      <th>fixed_ips</th>
-      <th>mac_address</th>
-      <th>id</th>
-    </tr>
-    <tr ng-repeat="port in neutronPorts | filter:search">
+    <tr ng-repeat="port in neutronPorts">
       <td>
         <div class="btn-group" uib-dropdown on-toggle="port.dropDownToggled(open);" is-open="status.isopen">
-          <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-            {{ port.selectedOrder }} <span class="caret"></span>
-          </button>
+          <form action="">
+          <input id="checkboxes" type="checkbox">
+          </form>
           <ul uib-dropdown-menu aria-labelledby="single-button" >
             <li ng-repeat="(idx, order) in maxChainOrder track by $index"><a ng-click="selectOrder(port, order)" role="button">{{ order }}</a></li>
           </ul>
         </div>
       </td>
-      <td>{{ port.ip }}</td>
-      <td>{{ port.mac_address }}</td>
-      <td>{{ port.id }}</td>
+      <td></td>
+      <td></td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="">Delete</a></li>
+              <li><a href="">Modify</a></li>
+            </ul>
+          </div>
+      </td>
     </tr>
   </tbody>
 </table>
+<div class="modal-footer">
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Service Chain</button>
+</div>

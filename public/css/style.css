@@ -79,6 +79,35 @@ container-fluid{
   background-size: auto 60%;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 161px;
+  width: 160px;
   height: 50px;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #5f3975;
+    border-color: #5f3975;
+}
+body.modal-open,
+.modal-open .navbar-fixed-top,
+.modal-open .navbar-fixed-bottom {
+  margin-right: 0;
+}
+.btn-group-lg > .btn, .btn-lg {
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    background-color: #5f3975;
+    border-color: #5f3975;
+}
+.btn-info {
+    color: #fff;
+    background-color: #5f3975;
+    border-color: #5f3975;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 4px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
 }
