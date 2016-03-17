@@ -88,14 +88,16 @@
             </div>
           </div>
         </div>
-    <!--  <button class="btn btn-primary" ng-click="fetchNeutronPorts()">Get Neutron Ports</button>
 
-  <div class="alert alert-info">
+
+  <div ng-show="showMessage" class="alert {{ alertClass }}">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <strong>Info!</strong> Please choose the number of Neutron Ports
-  </div>-->
+    <strong>{{ alertTitle }}</strong> {{ alertMessage }}
+  </div>
+
+
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
         <div class="panel-heading">
@@ -110,26 +112,21 @@
 <table class="table">
   <tbody>
       <th><form action="">
-              <input type="checkbox" name="" value=""> Select All<br>
+              <input ng-model="selectAll" ng-change="toggleSelect()" type="checkbox" name="" value=""> Select All<br>
           </form>
     </th>
       <th>Chain Id</th>
       <th>Neutron-port order</th>
       <th>Actions</th>
     </tr>
-    <tr ng-repeat="port in neutronPorts">
+    <tr ng-repeat="chain in serviceChains">
       <td>
-        <div class="btn-group" uib-dropdown on-toggle="port.dropDownToggled(open);" is-open="status.isopen">
           <form action="">
-          <input id="checkboxes" type="checkbox">
+          <input id="checkboxes" type="checkbox" ng-model="chain.selected">
           </form>
-          <ul uib-dropdown-menu aria-labelledby="single-button" >
-            <li ng-repeat="(idx, order) in maxChainOrder track by $index"><a ng-click="selectOrder(port, order)" role="button">{{ order }}</a></li>
-          </ul>
-        </div>
       </td>
-      <td></td>
-      <td></td>
+      <td>{{ chain.id }}</td>
+      <td>{{ chain.neutroPortOrder }}</td>
       <td>
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions

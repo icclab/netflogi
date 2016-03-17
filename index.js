@@ -22,6 +22,20 @@ var neutronPorts = [
 	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", mac_address: "fa:16:3e:79:75:3f", fixed_ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.2"}]},
 	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", mac_address: "fa:16:3e:e1:2c:58", fixed_ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.5"}]}
 ];
+var serviceChains = [
+	{ id: "1c7811dc-e0b1-4d1e-9089-c203df328157", neutroPortOrder: "test"},
+	{ id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", neutroPortOrder: "test"},
+	{ id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", neutroPortOrder: "test"},
+	{ id: "3cac74fd-f24d-4b40-8344-1a86af85113e", neutroPortOrder: "test"},
+	{ id: "78058861-9079-4b9e-925f-81f4a0ac3e27", neutroPortOrder: "test"},
+	{ id: "7fc1733c-f8d3-47cf-b755-0b08374a0e55", neutroPortOrder: "test"},
+	{ id: "8075c307-4df9-4421-b65b-b2d871f83f56", neutroPortOrder: "test"},
+	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", neutroPortOrder: "test"},
+	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", neutroPortOrder: "test"}
+];
+app.get("/api/service-chain", function(req, res){
+	res.status(200).send( {serviceChains: serviceChains});
+});
 
 app.post("/api/service-chain", function(req, res) {
 	console.log("/api/service-chain", req.body);

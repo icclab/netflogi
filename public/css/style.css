@@ -91,7 +91,7 @@ body.modal-open,
 .modal-open .navbar-fixed-top,
 .modal-open .navbar-fixed-bottom {
   margin-right: 0;
-}
+  }
 .btn-group-lg > .btn, .btn-lg {
     padding: 6px 8px;
     font-size: 14px;
@@ -99,12 +99,9 @@ body.modal-open,
     border-radius: 6px;
     background-color: #5f3975;
     border-color: #5f3975;
+    margin-right: 30;
 }
-.btn-info {
-    color: #fff;
-    background-color: #5f3975;
-    border-color: #5f3975;
-}
+
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     padding: 4px;
     line-height: 1.42857143;
@@ -125,4 +122,24 @@ body.modal-open,
     height: 250px;
     text-align: center;
     width: auto;
+}
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 300px;
+}
+.panel-primary > .panel-heading { 	
+    color: #fff;
+    background-color: #5f3975;
+    border-color: #5f3975;
+}
+.panel-primary {
+    border-color: #5f3975;
+    margin-left:-15px;
+}
+.panel-warning {
+    border-color: #faebcc;
+    margin-left:-15px;
 }

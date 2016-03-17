@@ -84,6 +84,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			}
 		});
 	};
+	this.getServiceChains = function() {
+		return $http({
+			method: 'GET',
+			url: settings.url.serviceChain,
+		});
+	};
 	this.getNeutronPorts = function() {
 		return $http({
 			method: "GET",
@@ -132,6 +138,23 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 	$scope.fetchNeutronPorts();
+	$scope.fetchServiceChains = function() {
+		netfloc.getServiceChains().then(function(serviceChains){
+			console.log("hallo", serviceChains);
+			$scope.serviceChains = _.map(serviceChains.data.serviceChains, function(serviceChain){
+				serviceChain.selected = false;
+				return serviceChain;
+			});
+		});
+	}
+	$scope.fetchServiceChains();
+
+	$scope.toggleSelect = function(){
+		$scope.serviceChains = _.map($scope.serviceChains, function(serviceChain){
+			serviceChain.selected = $scope.selectAll;
+			return serviceChain;
+		});
+	};
 	var clearNeutronPorts = function() {
 		$scope.neutronPorts = _.map($scope.neutronPorts, function(port) {
 			console.log(port);
@@ -177,12 +200,17 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			.then(function(data) {
 				$scope.fetchNeutronPorts();
 				console.log(data);
+				$scope.showMessage = true;
+			  $scope.alertClass = "alert-success";
+			  $scope.alertTitle = "Success"; $scope.alertMessage = "Your Chain has been successfully created";
 			})
 			.catch(function(err) {
+				$scope.showMessage = true;
+			  $scope.alertClass = "alert-danger";
+			  $scope.alertTitle = "Error"; $scope.alertMessage = "Something went wrong";
 				console.error(err);
 			});
 	};
-
 	$scope.selectOrder = function(port, order) {
 		if(port.selectedOrder !== 0){
 			$scope.maxChainOrder.push(port.selectedOrder);
@@ -239,3 +267,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 .controller('LogsController', function() {
 	console.log("LogsController");
 })
+function close() {
+	var closeWindow;
+    setTimeout(function(){ closeWindow.close() }, 3);
+}
