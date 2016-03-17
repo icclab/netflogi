@@ -40,16 +40,7 @@
                     </div>-->
                   </form>
                     </div>
-                    <div class="col-md-8">
-                      <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
-                          <div class="panel-heading">
-                            <h3 class="panel-title">Service Chain summary {{ (chainIsValid(neutronPorts, maxChainOrder)) ? '' : ''; }}</h3>
-                          </div>
-                        <div class="panel-body">
-                          {{ (getServiceChain(neutronPorts).length == 0 || !chainIsValid(neutronPorts, maxChainOrder)) ? "" : getServiceChain(neutronPorts).join(","); }}
-                        </div>
-                      </div>
-                    </div>
+                
                   </div>
                   <table class="table">
                     <tbody>
