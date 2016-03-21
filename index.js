@@ -24,14 +24,14 @@ var neutronPorts = [
 ];
 var serviceChains = [
 	{ id: "1c7811dc-e0b1-4d1e-9089-c203df328157", neutroPortOrder: "test"},
-	{ id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", neutroPortOrder: "test"},
-	{ id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", neutroPortOrder: "test"},
-	{ id: "3cac74fd-f24d-4b40-8344-1a86af85113e", neutroPortOrder: "test"},
-	{ id: "78058861-9079-4b9e-925f-81f4a0ac3e27", neutroPortOrder: "test"},
-	{ id: "7fc1733c-f8d3-47cf-b755-0b08374a0e55", neutroPortOrder: "test"},
-	{ id: "8075c307-4df9-4421-b65b-b2d871f83f56", neutroPortOrder: "test"},
-	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", neutroPortOrder: "test"},
-	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", neutroPortOrder: "test"}
+	{ id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", neutroPortOrder: "test1"},
+	{ id: "3b842df8-e92a-4d53-b394-fc575d8d37e5", neutroPortOrder: "test2"},
+	{ id: "3cac74fd-f24d-4b40-8344-1a86af85113e", neutroPortOrder: "test3"},
+	{ id: "78058861-9079-4b9e-925f-81f4a0ac3e27", neutroPortOrder: "test4"},
+	{ id: "7fc1733c-f8d3-47cf-b755-0b08374a0e55", neutroPortOrder: "test5"},
+	{ id: "8075c307-4df9-4421-b65b-b2d871f83f56", neutroPortOrder: "test6"},
+	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", neutroPortOrder: "test7"},
+	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", neutroPortOrder: "test8"}
 ];
 app.get("/api/service-chain", function(req, res){
 	res.status(200).send( {serviceChains: serviceChains});

@@ -140,14 +140,35 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	$scope.fetchNeutronPorts();
 	$scope.fetchServiceChains = function() {
 		netfloc.getServiceChains().then(function(serviceChains){
-			console.log("hallo", serviceChains);
 			$scope.serviceChains = _.map(serviceChains.data.serviceChains, function(serviceChain){
 				serviceChain.selected = false;
 				return serviceChain;
 			});
 		});
-	}
+	};
 	$scope.fetchServiceChains();
+
+
+	$scope.deleteSelected = function(){
+		var todelete = Array();
+		for (i = 0; i < $scope.serviceChains.length; i++){
+				if ($scope.serviceChains[i].selected == true) {
+					todelete.push(i);
+				}
+			};
+			for(i = todelete.length - 1; i >= 0; i--){
+				$scope.serviceChains.splice(todelete[i], 1);
+			};
+		};
+
+
+
+  // angular.forEach($scope.serviceChains, function (data, index) {
+	// 	console.log(data, index);
+	// 	if (data.selected == true) {
+	// 		$scope.serviceChains.splice(index, 1);
+	// 	}
+  // });
 
 	$scope.toggleSelect = function(){
 		$scope.serviceChains = _.map($scope.serviceChains, function(serviceChain){
@@ -267,7 +288,3 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 .controller('LogsController', function() {
 	console.log("LogsController");
 })
-function close() {
-	var closeWindow;
-    setTimeout(function(){ closeWindow.close() }, 3);
-}

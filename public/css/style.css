@@ -99,7 +99,7 @@ body.modal-open,
     border-radius: 6px;
     background-color: #5f3975;
     border-color: #5f3975;
-    margin-right: 30;
+    margin-right: -16;
 }
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
@@ -130,7 +130,7 @@ body.modal-open,
     border-radius: 4px;
     width: 300px;
 }
-.panel-primary > .panel-heading { 	
+.panel-primary > .panel-heading {
     color: #fff;
     background-color: #5f3975;
     border-color: #5f3975;
@@ -142,4 +142,19 @@ body.modal-open,
 .panel-warning {
     border-color: #faebcc;
     margin-left:-15px;
+}
+.col-md-8 {
+    width: 69%;
+}
+.colorId{
+  color:grey;
+}
+.table {
+    width: 83%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+.dropdownaction {
+    position: absolute;
+    margin-left: 1149px;
 }

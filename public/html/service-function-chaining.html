@@ -1,15 +1,4 @@
-  <!--<div class="row">
-  <div class="col-md-4">
-    <form>
-      <div class="form-group">
-        <label>
-          Number of Neutron Ports in the Chain
-          <input type="number" class="form-control" ng-model="maxChainOrderNr">
-        </label>
-      </div>
-      <div class ="primary-buttons"> -->
-        <!--  <button ng-disabled="!maxChainOrderIsValid(maxChainOrderNr)" ng-click="applyMaxChainOrder()" class="btn btn-primary">Apply Number</button> -->
-        <div class="container">
+<div class="container">
           <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
@@ -40,7 +29,7 @@
                     </div>-->
                   </form>
                     </div>
-                
+
                   </div>
                   <table class="table">
                     <tbody>
@@ -66,9 +55,9 @@
                             </ul>
                           </div>
                         </td>
-                        <td>{{ port.ip }}</td>
-                        <td>{{ port.mac_address }}</td>
-                        <td>{{ port.id }}</td>
+                        <td class="colorId">{{ port.ip }}</td>
+                        <td class="colorId">{{ port.mac_address }}</td>
+                        <td class="colorId">{{ port.id }}</td>
                       </tr>
                     </tbody>
                   </table>          </div>
@@ -80,14 +69,12 @@
           </div>
         </div>
 
-
   <div ng-show="showMessage" class="alert {{ alertClass }}">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <strong>{{ alertTitle }}</strong> {{ alertMessage }}
   </div>
-
 
   <div class="col-md-8">
     <div class="panel panel-{{ (chainIsValid(neutronPorts, maxChainOrder)) ? 'primary' : 'warning'; }}">
@@ -100,15 +87,21 @@
     </div>
   </div>
 </div>
+
+  <div class="dropdown">
+      <ul class="dropdown-menu">
+        <li><a href="">Delete</a></li>
+      </ul>
+    </div>
 <table class="table">
   <tbody>
-      <th><form action="">
-              <input ng-model="selectAll" ng-change="toggleSelect()" type="checkbox" name="" value=""> Select All<br>
+      <th>
+          <form action="">
+              <input ng-model="selectAll" ng-change="toggleSelect()" type="checkbox" name="" value=""><br>
           </form>
     </th>
       <th>Chain Id</th>
       <th>Neutron-port order</th>
-      <th>Actions</th>
     </tr>
     <tr ng-repeat="chain in serviceChains">
       <td>
@@ -116,21 +109,18 @@
           <input id="checkboxes" type="checkbox" ng-model="chain.selected">
           </form>
       </td>
-      <td>{{ chain.id }}</td>
-      <td>{{ chain.neutroPortOrder }}</td>
-      <td>
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a href="">Delete</a></li>
-              <li><a href="">Modify</a></li>
-            </ul>
-          </div>
-      </td>
+      <td class="colorId">{{ chain.id }}</td>
+      <td class="colorId">{{ chain.neutroPortOrder }}</td>
     </tr>
   </tbody>
 </table>
 <div class="modal-footer">
+  <div class="dropdownaction">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chain Actions
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu" ng-click="deleteSelected(item)">
+        <li><a href="">Delete</a></li>
+      </ul>
+  </div>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Service Chain</button>
 </div>
