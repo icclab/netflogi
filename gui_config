@@ -1,0 +1,11 @@
+guiPort:  8080
+netflocHost:  10.30.0.61
+netflocPort:  8181
+netflocAuth:  admin:admin
+keystoneHost:  10.100.0.3
+keystonePort:  5000
+keystoneUser:  admin
+keystonePass:  ii70mseq
+keystoneTenant:  admin
+neutronHost:  10.100.0.3
+neutronPort:  9696
