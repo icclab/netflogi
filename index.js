@@ -22,6 +22,7 @@ var neutronPorts = [
 	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", mac_address: "fa:16:3e:79:75:3f", fixed_ips: [{"subnet_id": "61ae89f8-5297-4d5a-96fa-c6c3e2a1fa74", "ip_address": "10.12.0.2"}]},
 	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", mac_address: "fa:16:3e:e1:2c:58", fixed_ips: [{"subnet_id": "50d00739-172c-4ca5-9c0d-79478b27bc9f", "ip_address": "12.12.12.5"}]}
 ];
+
 var serviceChains = [
 	{ id: "1c7811dc-e0b1-4d1e-9089-c203df328157", neutroPortOrder: "test"},
 	{ id: "38aa2be8-dec7-49b3-94e6-805bb23c30fd", neutroPortOrder: "test1"},
@@ -33,12 +34,31 @@ var serviceChains = [
 	{ id: "87b30d9c-e895-42c0-8ea1-09c5087c2207", neutroPortOrder: "test7"},
 	{ id: "96ccf08f-6aa1-4b88-b853-4dfd46853a22", neutroPortOrder: "test8"}
 ];
+
 app.get("/api/service-chain", function(req, res){
-	res.status(200).send( {serviceChains: serviceChains});
+	res.status(200).send({ serviceChains: serviceChains });
+
+	// TODO
+});
+
+app.get("/api/service-chain/:id", function(req, res) {
+	console.log("GET /api/service-chain/" + req.params.id, req.body);
+
+	res.status(200).send(_.find(serviceChains, function(serviceChain) {
+		return req.params.id === serviceChain.id;
+	}));
+});
+
+app.delete("/api/service-chain/:id", function(req, res) {
+	console.log("DELETE /api/service-chain/" + req.params.id, req.body);
+	serviceChains = _.filter(serviceChains, function(serviceChain) {
+		return serviceChain.id !== req.params.id;
+	});
+	res.status(200).send();
 });
 
 app.post("/api/service-chain", function(req, res) {
-	console.log("/api/service-chain", req.body);
+	console.log("POST /api/service-chain", req.body);
 	var serviceChainString = "";
 	var postRequest = http.request({
 		host: config.netflocHost,

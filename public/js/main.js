@@ -90,6 +90,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			url: settings.url.serviceChain,
 		});
 	};
+	this.deleteServiceChain = function(id) {
+		return $http({
+			method: 'DELETE',
+			url: settings.url.serviceChain + '/' + id,
+		});
+	};
 	this.getNeutronPorts = function() {
 		return $http({
 			method: "GET",
@@ -148,27 +154,17 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	};
 	$scope.fetchServiceChains();
 
-
-	$scope.deleteSelected = function(){
-		var todelete = Array();
-		for (i = 0; i < $scope.serviceChains.length; i++){
-				if ($scope.serviceChains[i].selected == true) {
-					todelete.push(i);
-				}
-			};
-			for(i = todelete.length - 1; i >= 0; i--){
-				$scope.serviceChains.splice(todelete[i], 1);
-			};
-		};
-
-
-
-  // angular.forEach($scope.serviceChains, function (data, index) {
-	// 	console.log(data, index);
-	// 	if (data.selected == true) {
-	// 		$scope.serviceChains.splice(index, 1);
-	// 	}
-  // });
+	$scope.deleteSelected = function() {
+		_.each(_.filter($scope.serviceChains, function(serviceChain) {
+			return serviceChain.selected === true;
+		}), function(serviceChain) {
+			netfloc.deleteServiceChain(serviceChain.id).then(function() {
+				$scope.serviceChains = _.filter($scope.serviceChains, function(sc) {
+					return sc.id !== serviceChain.id;
+				});
+			});
+		});
+	};
 
 	$scope.toggleSelect = function(){
 		$scope.serviceChains = _.map($scope.serviceChains, function(serviceChain){
