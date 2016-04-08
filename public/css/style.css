@@ -95,11 +95,10 @@ body.modal-open,
 .btn-group-lg > .btn, .btn-lg {
     padding: 6px 8px;
     font-size: 14px;
-    line-height: 1.3333333;
+    line-height: 1.42857143;
     border-radius: 6px;
     background-color: #5f3975;
     border-color: #5f3975;
-    margin-right: -16;
 }
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
@@ -153,8 +152,4 @@ body.modal-open,
     width: 83%;
     max-width: 100%;
     margin-bottom: 20px;
-}
-.dropdownaction {
-    position: absolute;
-    margin-left: 1149px;
 }
