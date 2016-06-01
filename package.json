@@ -1,0 +1,17 @@
+{
+  "name": "netfloc-gui-srv",
+  "version": "1.0.0",
+  "description": "server for netfloc GUI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "icclab",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "prompt": "^1.0.0",
+    "underscore": "^1.8.3"
+  }
+}
