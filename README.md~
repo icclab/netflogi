@@ -43,7 +43,7 @@ http://[netflogiHost]:[netflogiPort]
 
 * One or multiple selected VNFs can be deleted.
 
-* To create a Service Chain on ```Services->Create Service Chain``` you can choose the number and the order of VNFs as they appear in the chain. 
+* To create a Service Chain on ```Create Service Chain``` you can choose the number and the order of VNFs as they appear in the chain. 
 
 * To delete one or multiple existing chains, use the  ```Chain Actions->Delete``` option.
 

@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="width: 950px;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h1 class="modal-title">Virtual Network Functions</h1>
+            <p>Here you can create a Virtual Network Functions by choosing a name and the Description as well as the ingress and egress port.</p>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="container">
+                <div class="main">
+                  <h4>Enter Name</h4>
+                  <input ng-model="vnfName" type="text" name="input" placeholder="Enter name here">
+                  <ul>
+                    <li ng-repeat="name in names">
+                      {{ name }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="main">
+                  <h4>Enter Description</h4>
+                    <input ng-model="vnfDescription" type="text" name="input" placeholder="Enter description here">
+                    <ul>
+                      <li ng-repeat="description in descriptions">
+                        {{ description }}
+                      </li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Filter by port: <br><input style="width: 134px;" ng-model="search.selectedOrder"></th>
+                <th>Filter by id: <br><input ng-model="search.id"></th>
+                <th>Filter by fixed_ips: <br><input ng-model="search.fixed_ips"></th>
+                <th>Filter by mac_address: <br><input ng-model="search.mac_address"></th>
+              </tr>
+                <th>port</th>
+                <th>id</th>
+                <th>fixed_ips</th>
+                <th>mac_address</th>
+              </tr>
+              <tr ng-repeat="port in neutronPorts | filter:search">
+                <td>
+                  <div class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                      {{ port.portSelect }} <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu aria-labelledby="single-button">
+                      <li ng-repeat="(idx, selectablePort) in selectablePorts track by $index"><a ng-click="selectPort(port, selectablePort)" role="button">{{ selectablePort }}</a></li>
+                    </ul>
+                  </div>
+                </td>
+                  <td class="colorId">{{ port.id }}</td>
+                  <td class="colorId">{{ port.fixed_ips }}</td>
+                  <td class="colorId">{{ port.mac_address }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn-primary"  ng-disabled="!vnfIsValid(selectablePorts, vnfName, vnfDescription)" ng-click="createVirNetFun()">Create VNF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<h1 class="title">Virtual Network Functions</h1>
+<p>here is a list of all the created Virtual Network Functionss. You can Delete them or create a new one with the buttons create and delete.</p>
+<div ng-show="showMessage" class="alert {{ alertClass }}">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>{{ alertTitle }}</strong> {{ alertMessage }}
+</div>
+<div class="col-md-8">
+  <div class="panel panel-{{ (vnfIsValid(selectablePorts, vnfName, vnfDescription)) ? 'primary' : 'warning'; }}">
+    <div class="panel-heading">
+      <h3 class="panel-title">VNF summary {{ (vnfIsValid(selectablePorts, vnfName, vnfDescription)) ? '' : ''; }}</h3>
+    </div>
+    <div class="panel-body">
+      {{ !vnfIsValid(selectablePorts, vnfName, vnfDescription) ? "" : vnfName + ", " + vnfDescription; }}
+    </div>
+  </div>
+</div>
+  <div class="btn-group" role="group" aria-label="">
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" ng-click="clearVNFForm()" >Create VNF</button>
+    <button type="button" class="btn btn-primary" ng-click="deleteSelected(item)">Delete</button>
+    <input type=button class="btn btn-primary" value="Refresh" onClick="history.go()">
+  </div>
+<table class="table">
+  <tbody>
+    <th>
+      <form action="">
+        <input ng-model="selectAll" ng-change="toggleSelect()" type="checkbox" name="" value=""><br>
+      </form>
+    </th>
+      <th>id</th>
+      <th>ingress_port</th>
+      <th>egress_port</th>
+      <th>name</th>
+      <th>description</th>
+    </tr>
+    <tr ng-repeat="virNetFun in virNetFuns">
+      <td>
+        <form action="">
+        <input id="checkboxes" type="checkbox" ng-model="virNetFun.selected">
+        </form>
+      </td>
+        <td class="colorId">{{ virNetFun.id }}</td>
+        <td class="colorId">{{ virNetFun.ingress_port }}</td>
+        <td class="colorId">{{ virNetFun.egress_port }}</td>
+        <td class="colorId">{{ virNetFun.name }}</td>
+        <td class="colorId">{{ virNetFun.description }}</td>
+    </tr>
+  </tbody>
+</table>
