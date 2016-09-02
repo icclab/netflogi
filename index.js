@@ -101,6 +101,14 @@ app.post("/api/service-chain-delete", function(req, res) {
 	postRequest.end();
 });
 
+app.get("/api/service-chain/:id", function(req, res) {
+	console.log("GET /api/service-chain/" + req.params.id, req.body);
+
+	res.status(200).send(_.find(serviceChains, function(serviceChain) {
+		return req.params.id === serviceChain.id;
+	}));
+});
+
 app.post("/api/service-chain", function(req, res) {
 	console.log("POST /api/service-chain", req.body);
 	var serviceChainString = "";
@@ -112,7 +120,7 @@ app.post("/api/service-chain", function(req, res) {
 		path: "/restconf/operations/netfloc:create-service-chain",
 		headers: {
 			'Content-Type': 'application/json',
-      }
+      	}
 	}, function(netflocRes) {
 		console.log("netfloc response");
 		netflocRes.on('data', function (chunk) {
@@ -170,7 +178,6 @@ var getToken = function() {
 			console.log("keystone token", token);
 			tenant_id = token.access.token.tenant.id;
 			console.log("tenant id", tenant_id);
-
       	});
 	})
 	postRequest.on("error", function(err) {

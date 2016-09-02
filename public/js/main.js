@@ -68,7 +68,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			serviceChainDelete: '/api/service-chain-delete',
 			neutronPorts: '/api/neutron-ports',
 			novaServers: '/api/nova-servers',
-			netflocNodes: '/api/netfloc-nodes'
+			neutronPorts: '/api/neutron-ports'
 		}
 	};
 	this.config = function(options) {
@@ -94,6 +94,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 	this.deleteServiceChain = function(id) {
+		console.log("deleting chain ", id);
 		return $http({
 			method: 'POST',
 			url: settings.url.serviceChainDelete,
@@ -114,6 +115,18 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		return $http({
 			method: "GET",
 			url: settings.url.novaServers
+		});
+	};
+	this.getServiceChains = function() {
+		return $http({
+			method: 'GET',
+			url: settings.url.serviceChain,
+		});
+	};
+	this.getNeutronPorts = function() {
+		return $http({
+			method: "GET",
+			url: settings.url.neutronPorts
 		});
 	};
 })
@@ -190,17 +203,16 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			return chain.selected === true;
 		}), function(chain) {
 			console.log("Chain to be deleted ", chain.id);
-			netfloc.deleteServiceChain(chain.id).then(function() {
-				
+			netfloc.deleteServiceChain(chain.id).then(function() {				
 				$scope.showMessage = true;
 			  	$scope.alertClass = "alert-success";
-			  	$scope.alertTitle = "Success"; $scope.alertMessage = "The chain has been successfully deleted";
+			  	$scope.alertTitle = "Success"; $scope.alertMessage = "Chain successfully deleted";
 			  	netfloc.getServiceChains();
 			})
 			.catch(function(err) {
 				$scope.showMessage = true;
 			  	$scope.alertClass = "alert-danger";
-			  	$scope.alertTitle = "Error"; $scope.alertMessage = "Error in deleting the chain";
+			  	$scope.alertTitle = "Error"; $scope.alertMessage = "Error deleting the chain";
 				console.error(err);
 			});
 		});
