@@ -36,25 +36,69 @@ var serviceChains = [
 ];
 
 app.get("/api/service-chain", function(req, res){
-	res.status(200).send({ serviceChains: serviceChains });
-
-	// TODO
-});
-
-app.get("/api/service-chain/:id", function(req, res) {
-	console.log("GET /api/service-chain/" + req.params.id, req.body);
-
-	res.status(200).send(_.find(serviceChains, function(serviceChain) {
-		return req.params.id === serviceChain.id;
-	}));
-});
-
-app.delete("/api/service-chain/:id", function(req, res) {
-	console.log("DELETE /api/service-chain/" + req.params.id, req.body);
-	serviceChains = _.filter(serviceChains, function(serviceChain) {
-		return serviceChain.id !== req.params.id;
+	var chains = "";
+	var getRequest = http.request({
+		host: config.netflocHost,
+		port: config.netflocPort,
+		auth: config.netflocAuth,
+		method: "GET",
+		path: "/restconf/operational/netfloc:chains/",
+		headers: {
+			"contentType": "application/json",
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Headers": "Cache-Control, Origin, Authorization, Content-Type, X-Requested-With",
+			"Access-Control-Allow-Methods": "GET, PUT, POST"
+      	}
+	}, function(netflocRes) {
+		console.log("netfloc response");
+		netflocRes.on('data', function (chunk) {
+			chains += chunk;
+			console.log("Netfloc chains ", chains);
+      	});
+      	netflocRes.on("error", function(err) {
+      		console.log("neutron error:res", err);
+      		res.status(500).send(err);
+      	});
+      	netflocRes.on("end", function() {
+      		res.status(200).send(chains);
+      	});
+	})
+	getRequest.on("error", function(err) {
+		console.log("netfloc error:req", err);
+		res.send(err);
 	});
-	res.status(200).send();
+	getRequest.end();
+});
+
+app.post("/api/service-chain-delete", function(req, res) {
+	console.log("DELETE /api/service-chain-delete ", req.body.input['service-chain-id']);
+	var postRequest = http.request({
+		host: config.netflocHost,
+		port: config.netflocPort,
+		auth: config.netflocAuth,
+		method: "POST",
+		path: "/restconf/operations/netfloc:delete-service-chain",
+		headers: {
+			'Content-Type': 'application/json',
+      }
+	}, function(netflocRes) {
+		netflocRes.on('data', function (data) {
+			console.log('Response: ' + data);
+      	});
+      	netflocRes.on("error", function(err) {
+      		console.log("netfloc error:res", err);
+      		res.status(500).send(err);
+      	});
+      	netflocRes.on("end", function() {
+      		res.status(200).send("Success");
+      	});
+	})
+	postRequest.on("error", function(err) {
+		console.log("netfloc error:req", err);
+		res.status(400).send(err);
+	});
+	postRequest.write(JSON.stringify(req.body));
+	postRequest.end();
 });
 
 app.post("/api/service-chain", function(req, res) {
@@ -68,7 +112,6 @@ app.post("/api/service-chain", function(req, res) {
 		path: "/restconf/operations/netfloc:create-service-chain",
 		headers: {
 			'Content-Type': 'application/json',
-			//'Content-Length': Buffer.byteLength(req.body)
       }
 	}, function(netflocRes) {
 		console.log("netfloc response");
@@ -102,7 +145,7 @@ var keystone = {
     }
 };
 
-var token;
+var token, tenant_id;
 
 var getToken = function() {
 	var tokenString = "";
@@ -125,6 +168,9 @@ var getToken = function() {
       	keyStoneRes.on("end", function() {
       		token = JSON.parse(tokenString);
 			console.log("keystone token", token);
+			tenant_id = token.access.token.tenant.id;
+			console.log("tenant id", tenant_id);
+
       	});
 	})
 	postRequest.on("error", function(err) {
@@ -174,6 +220,45 @@ app.get("/api/neutron-ports", function(req, res) {
 		console.log("neutron error:req", err);
 		res.send(err);
 	});
+	console.log("Neutron get ports request ", getRequest);
+	getRequest.end();
+});
+
+app.get("/api/nova-servers", function(req, res) {
+	console.log("/api/nova-servers", req.body);
+	if (_.isUndefined(token)){
+		console.log("sending mock data", { ports: neutronPorts });
+		res.status(200).send({ ports: neutronPorts });
+		return;
+	}
+	var novaServerList = "";
+	var getRequest = http.request({
+		host: config.novaHost,
+		port: config.novaPort,
+		//auth: config.auth,
+		method: "GET",
+		path: "/0d8cd718d8524c9e82b924c6f291b3fc/servers",
+		headers: {
+			'X-Auth-Token': token.access.token.id
+      	}
+	}, function(novaRes) {
+		console.log("nova response");
+		novaRes.on('data', function (chunk) {
+			novaServerList += chunk;
+      	});
+      	novaRes.on("error", function(err) {
+      		console.log("neutron error:res", err);
+      		res.status(500).send(err);
+      	});
+      	novaRes.on("end", function() {
+      		res.status(200).send(novaServerList);
+      	});
+	})
+	getRequest.on("error", function(err) {
+		console.log("neutron error:req", err);
+		res.send(err);
+	});
+	console.log("Nova get servers request ", getRequest);
 	getRequest.end();
 });
 

@@ -107,16 +107,18 @@
           </form>
     </th>
       <th>Chain Id</th>
-      <th>Neutron-port order</th>
+      <th>Chain Owner</th>
+      <th>Connection points</th>
     </tr>
-    <tr ng-repeat="chain in serviceChains">
+    <tr ng-repeat="chain in chains">
       <td>
           <form action="">
           <input id="checkboxes" type="checkbox" ng-model="chain.selected">
           </form>
       </td>
       <td class="colorId">{{ chain.id }}</td>
-      <td class="colorId">{{ chain.neutroPortOrder }}</td>
+      <td class="colorId">{{ chain['owner-id'] }}</td>
+      <td class="colorId">{{ chain.port }}</td>
     </tr>
   </tbody>
 </table>

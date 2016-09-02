@@ -65,13 +65,22 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	var settings = {
 		url: {
 			serviceChain: '/api/service-chain',
-			neutronPorts: '/api/neutron-ports'
+			serviceChainDelete: '/api/service-chain-delete',
+			neutronPorts: '/api/neutron-ports',
+			novaServers: '/api/nova-servers',
+			netflocNodes: '/api/netfloc-nodes'
 		}
 	};
 	this.config = function(options) {
 		if (configurated) { return that; }
 		_.extend(settings, options); configurated = true;
 		return that;
+	};
+	this.getServiceChains = function() {
+		return $http({
+			method: 'GET',
+			url: settings.url.serviceChain,
+		});
 	};
 	this.createServiceChain = function(neutronPorts) {
 		return $http({
@@ -84,22 +93,27 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			}
 		});
 	};
-	this.getServiceChains = function() {
-		return $http({
-			method: 'GET',
-			url: settings.url.serviceChain,
-		});
-	};
 	this.deleteServiceChain = function(id) {
 		return $http({
-			method: 'DELETE',
-			url: settings.url.serviceChain + '/' + id,
+			method: 'POST',
+			url: settings.url.serviceChainDelete,
+			data: {
+				"input": {
+					"service-chain-id": id
+				}
+			}
 		});
 	};
 	this.getNeutronPorts = function() {
 		return $http({
 			method: "GET",
 			url: settings.url.neutronPorts
+		});
+	};
+	this.getNovaServers = function() {
+		return $http({
+			method: "GET",
+			url: settings.url.novaServers
 		});
 	};
 })
@@ -144,24 +158,50 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 	$scope.fetchNeutronPorts();
+
 	$scope.fetchServiceChains = function() {
-		netfloc.getServiceChains().then(function(serviceChains){
-			$scope.serviceChains = _.map(serviceChains.data.serviceChains, function(serviceChain){
-				serviceChain.selected = false;
-				return serviceChain;
+		netfloc.getServiceChains().then(function(chains){
+			$scope.chains = _.map(chains.data.chains.chain, function(chain){
+				chain.selected = false;
+				chain.port = _.map(chain["chain-connection-point"], function(port){
+					return port;
+				}).join(",");
+				console.log("Service chain ", chain);
+				return chain;
 			});
 		});
 	};
 	$scope.fetchServiceChains();
 
+	$scope.fetchNovaServers = function() {
+		netfloc.getNovaServers().then(function(servers){
+			console.log("nova-servers", servers, servers.data.servers);
+			$scope.novaServers = _.map(servers.data.servers, function(server){
+				server.selected = false;
+				return server;
+				console.log("Nova server ", server);
+			});
+		});
+	};
+	$scope.fetchNovaServers();
+
 	$scope.deleteSelected = function() {
-		_.each(_.filter($scope.serviceChains, function(serviceChain) {
-			return serviceChain.selected === true;
-		}), function(serviceChain) {
-			netfloc.deleteServiceChain(serviceChain.id).then(function() {
-				$scope.serviceChains = _.filter($scope.serviceChains, function(sc) {
-					return sc.id !== serviceChain.id;
-				});
+		_.each(_.filter($scope.chains, function(chain) {
+			return chain.selected === true;
+		}), function(chain) {
+			console.log("Chain to be deleted ", chain.id);
+			netfloc.deleteServiceChain(chain.id).then(function() {
+				
+				$scope.showMessage = true;
+			  	$scope.alertClass = "alert-success";
+			  	$scope.alertTitle = "Success"; $scope.alertMessage = "The chain has been successfully deleted";
+			  	netfloc.getServiceChains();
+			})
+			.catch(function(err) {
+				$scope.showMessage = true;
+			  	$scope.alertClass = "alert-danger";
+			  	$scope.alertTitle = "Error"; $scope.alertMessage = "Error in deleting the chain";
+				console.error(err);
 			});
 		});
 	};
@@ -216,7 +256,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		netfloc.createServiceChain(serviceChainString)
 			.then(function(data) {
 				$scope.fetchNeutronPorts();
-				console.log(data);
+				console.log("neuron ports ", data);
 				$scope.showMessage = true;
 			  $scope.alertClass = "alert-success";
 			  $scope.alertTitle = "Success"; $scope.alertMessage = "Your Chain has been successfully created";
@@ -239,7 +279,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		// sortieren reihenfolge
 		console.log("select order for port", order, port);
 	};
-})
+})	
 .controller('ServicesController', function() {
 	console.log("ServicesController");
 })
