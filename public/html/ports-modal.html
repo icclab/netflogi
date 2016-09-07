@@ -1,0 +1,36 @@
+<div class="container">
+            <div class="modal fade" id="portsModal" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Port Info</h4>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th>Filter by number: <br><input ng-model="search.ip"></th>
+                          <th>Filter by mac: <br><input ng-model="search.mac_address"></th>
+                          <th>Filter by name: <br><input ng-model="search.id"></th>
+                          <th>Filter by state: <br><input ng-model="search.id"></th>
+                        </tr>
+                          <th>Number</th>
+                          <th>MAC Address</th>
+                          <th>Name</th>
+                          <th>Configuration State</th>
+                        </tr>
+                        {{ console.log("ports", ports); }}
+                        <tr ng-repeat="port in ports | filter:search">
+                          <td class="colorId">{{ port["flow-node-inventory:port-number"] }}</td>
+                          <td class="colorId">{{ port["flow-node-inventory:hardware-address"] }}</td>
+                          <td class="colorId">{{ port["flow-node-inventory:name"] }}</td>
+                          <td class="colorId">{{ port["flow-node-inventory:state"]["link-down"] ? PORT-DOWN : PORT-UP }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

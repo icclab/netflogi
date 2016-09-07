@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-config.json
 .DS_Store
-=======
+.idea
 config.json
->>>>>>> 7a14e0fc6027d8eb5d3588637194b526c37d544c
+netfloc-gui.iml

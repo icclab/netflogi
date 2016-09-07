@@ -269,6 +269,42 @@ app.get("/api/nova-servers", function(req, res) {
 	getRequest.end();
 });
 
+app.get("/api/netfloc-nodes", function(req, res) {
+	console.log("/api/netfloc-nodes");
+	var nodes = "";
+	var getRequest = http.request({
+		host: config.netflocHost,
+		port: config.netflocPort,
+		auth: config.netflocAuth,
+		method: "GET",
+		path: "/restconf/operational/opendaylight-inventory:nodes",
+		headers: {
+			"contentType": "application/json",
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Headers": "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With",
+			"Access-Control-Allow-Methods": "GET, PUT, POST"
+      	}
+	}, function(netflocRes) {
+		console.log("netfloc response");
+		netflocRes.on('data', function (chunk) {
+			nodes += chunk;
+      	});
+      	netflocRes.on("error", function(err) {
+      		console.log("neutron error:res", err);
+      		res.status(500).send(err);
+      	});
+      	netflocRes.on("end", function() {
+      		res.status(200).send(nodes);
+      	});
+	})
+	getRequest.on("error", function(err) {
+		console.log("netfloc error:req", err);
+		res.send(err);
+	});
+	getRequest.end();
+});
+
+
 var startServer = function() {
 	app.listen(config.guiPort, function() {
 		console.log("listening on port " + config.guiPort);

@@ -55,6 +55,10 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		controller:'FlowPatternController',
 		templateUrl:'html/flowpatterns.html',
 	})
+	.when('/monitoring', {
+		controller:'MonitoringController',
+		templateUrl:'html/monitoring.html',
+	})
 	.otherwise({
 		redirectTo:'/'
 	});
@@ -68,7 +72,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			serviceChainDelete: '/api/service-chain-delete',
 			neutronPorts: '/api/neutron-ports',
 			novaServers: '/api/nova-servers',
-			neutronPorts: '/api/neutron-ports'
+			netflocNodes: '/api/netfloc-nodes'
 		}
 	};
 	this.config = function(options) {
@@ -129,6 +133,13 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			url: settings.url.neutronPorts
 		});
 	};
+	this.getNodes = function() {
+	    console.log("getting nodes");
+		return $http({
+			method: "GET",
+			url: settings.url.netflocNodes,
+		});
+	};
 })
 .controller('MainController', function($scope, $location) {
 	console.log('currentroute', $location.$$path);
@@ -138,7 +149,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	{href:"#/topology" , label:"Topology" },
 	{href:"#/logs" , label:"Logs" }
 	];
-	$scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/created-sfcs" , label:"Created SFCs" }, {href:"#/chainpattern" , label:"Chain Pattern" }]};
+	$scope.menuService = {label:"Service" , menu: [{href:"#/service-function-chaining" , label:"Service Function Chaining"} , {href:"#/created-sfcs" , label:"Created SFCs" }, {href:"#/chainpattern" , label:"Chain Pattern" }, {href:"#/monitoring" , label:"Monitoring"}]};
 	$scope.menuConnection = {label:"Connection" , menu: [{href:"#/networkpath" , label:"Network Path" } , {href:"#/flowpatterns" , label:"Flow Pattern" }] };
 	$scope.menuBridges = {label:"Bridges" , menu: [{href:"#/subbridges" , label:"Bridges" } , {href:"#/bridgepattern" , label:"Bridge Pattern" }]};
 	$scope.menuTopology = {};
@@ -203,7 +214,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			return chain.selected === true;
 		}), function(chain) {
 			console.log("Chain to be deleted ", chain.id);
-			netfloc.deleteServiceChain(chain.id).then(function() {				
+			netfloc.deleteServiceChain(chain.id).then(function() {
 				$scope.showMessage = true;
 			  	$scope.alertClass = "alert-success";
 			  	$scope.alertTitle = "Success"; $scope.alertMessage = "Chain successfully deleted";
@@ -291,7 +302,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		// sortieren reihenfolge
 		console.log("select order for port", order, port);
 	};
-})	
+})
 .controller('ServicesController', function() {
 	console.log("ServicesController");
 })
@@ -335,4 +346,31 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 })
 .controller('LogsController', function() {
 	console.log("LogsController");
+})
+.controller('MonitoringController', function($scope, netfloc) {
+	$scope.main.hasnavigation = true;
+	console.log(" monitoringController");
+	$scope.introductionmonitoring="SDN monitoring";
+
+	$scope.fetchNodes = function() {
+		netfloc.getNodes().then(function(nodes){
+			console.log("netfloc-nodes", nodes.data.nodes);
+			$scope.nodes = _.map(nodes.data.nodes.node, function(node){
+				node.selected = false;
+				console.log("Netfloc node ", node);
+				return node;
+			});
+		});
+	};
+	$scope.fetchNodes();
+
+	$scope.showPorts = function(node) {
+		ports = node["node-connector"];
+		console.log("Show ports node ", ports);
+		$scope.ports = _.map(node["node-connector"], function(port){
+			port.node_id = node.id;
+			return port;
+		});
+	};
+
 })
