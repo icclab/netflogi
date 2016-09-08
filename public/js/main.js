@@ -373,4 +373,14 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 
+	$scope.showTables = function(node) {
+		tables = node["flow-node-inventory:table"];
+		//tables = node["flow-node-inventory:table"].id == "0" ?  node["flow-node-inventory:table"].id : "";
+		console.log("Show tables node ", tables);
+		$scope.Math = window.Math;
+		$scope.tables = _.map(node["flow-node-inventory:table"], function(table){
+		 	return table;
+		});
+	};
+
 })

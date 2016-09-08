@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" ng-value="string">Info Port: {{ ports[0].node_id }}</h4>
+          <h4 class="modal-title" ng-value="string">Ports info for node {{ ports[0].node_id }}</h4>
         </div>
         <div class="modal-body">
           <table class="table">
@@ -15,6 +15,7 @@
                 <th>Filter by name: <br><input ng-model="search.id"></th>
                 <th>Filter by state: <br><input ng-model="search.id"></th>
               </tr>
+              <tr>
                 <th>Port Number</th>
                 <th>MAC Address</th>
                 <th>Port Name</th>
@@ -25,6 +26,53 @@
                 <td class="colorId">{{ port["flow-node-inventory:hardware-address"] }}</td>
                 <td class="colorId">{{ port["flow-node-inventory:name"] }}</td>
                 <td class="colorId">{{ port["flow-node-inventory:state"]["link-down"] ? "PORT-DOWN" : "PORT-UP" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="modal fade" id="tablesModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" ng-value="string">Table statistics for node {{ ports[0].node_id }}</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <caption>Aggregate flow statistics</caption>
+            <tbody>
+              <tr>
+                <th>Flows</th>
+                <th>Packets</th>
+                <th>Bytes</th>
+              </tr>
+              <tr ng-repeat="table in tables" ng-if="table.id === 0 ">
+                  <td class="colorId">{{ table["opendaylight-flow-statistics:aggregate-flow-statistics"]["flow-count"] }}</td>
+                  <td class="colorId">{{ Math.round(table["opendaylight-flow-statistics:aggregate-flow-statistics"]["packet-count"]/1000000) }}*10E6</td>
+                  <td class="colorId">{{ Math.round(table["opendaylight-flow-statistics:aggregate-flow-statistics"]["byte-count"]/1000000) }}GB</td>
+              </tr>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table">
+            <caption>Flow table statistics</caption>
+            <tbody>
+              <tr>
+                <th>Active flows</th>
+                <th>Looked up packets</th>
+                <th>Matched packets</th>
+              </tr>
+              <tr ng-repeat="table in tables" ng-if="table.id === 0 ">
+                  <td class="colorId">{{ table["opendaylight-flow-table-statistics:flow-table-statistics"]["active-flows"] }}</td>
+                  <td class="colorId">{{ Math.round(table["opendaylight-flow-table-statistics:flow-table-statistics"]["packets-looked-up"]/1000000) }}*10E6</td>
+                  <td class="colorId">{{ Math.round(table["opendaylight-flow-table-statistics:flow-table-statistics"]["packets-matched"]/1000000) }}*10E6</td>
+              </tr>
               </tr>
             </tbody>
           </table>
@@ -49,7 +97,7 @@
       <td class="colorId">{{ node['flow-node-inventory:hardware'] }}</td>
       <td class="colorId">{{ node['flow-node-inventory:software'] }}</td>
       <td> <button ng-click="showPorts(node)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#portsModal">Show Ports</button></td>
-      <td> <button ng-click="showTables()" class="btn btn-primary">Show Tables</button></td>
+      <td> <button ng-click="showTables(node)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#tablesModal">Show Tables</button></td>
     </tr>
   </tbody>
 </table>
