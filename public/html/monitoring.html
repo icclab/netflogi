@@ -1,9 +1,10 @@
 <!-- Main monitoring veiw-->
 <div class="header">
-  <h4 ng-value="string">Network topology controlled by Netfloc</h4>
+  <h4 ng-value="string">Network topology</h4>
 </div>
 <table class="table">
   <tbody>
+      <th></th>
       <th>Node Id</th>
       <th>Node IP</th>
       <th>Hardware</th>
@@ -12,7 +13,8 @@
       <th>Tables Info</th>
       <th>Flows Info</th>
     </tr>
-    <tr ng-repeat="node in nodes" ng-click="showPorts(node)">
+    <tr ng-repeat="node in nodes">
+      <th><img ng-src="switch.png" height="60" width="auto"></th>
       <td class="colorId">{{ node.id }}</td>
       <td class="colorId">{{ node['flow-node-inventory:ip-address'] }}</td>
       <td class="colorId">{{ node['flow-node-inventory:hardware'] }}</td>
@@ -23,7 +25,6 @@
     </tr>
   </tbody>
 </table>
-
 
 <!-- Ports modals-->
 <div class="container">
@@ -196,7 +197,6 @@
   </div>
 </div>
 
-
 <div class="container">
   <div class="modal fade" style="z-index:1000000" id="flowInstructionsModal" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -211,7 +211,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="container">
   <div class="modal fade" id="flowsModal" role="dialog">
