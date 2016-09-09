@@ -217,6 +217,8 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			netfloc.deleteServiceChain(chain.id).then(function() {
 				$scope.showMessage = true;
 			  	$scope.alertClass = "alert-success";
+					$scope.refresh();
+					$scope.reload();
 			  	$scope.alertTitle = "Success"; $scope.alertMessage = "Chain successfully deleted";
 			  	netfloc.getServiceChains();
 			})
@@ -371,6 +373,12 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			port.node_id = node.id;
 			return port;
 		});
+	};
+	
+	$scope.showPortsDetail = function(selectedPort) {
+		p = selectedPort["opendaylight-port-statistics:flow-capable-node-connector-statistics"];
+		$scope.Math = window.Math;
+		$scope.portDetails = p;
 	};
 
 	$scope.showTables = function(node) {

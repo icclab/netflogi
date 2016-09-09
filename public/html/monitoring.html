@@ -1,34 +1,77 @@
 <div class="container">
+  <div class="modal fade" style="z-index:1000000" id="portsDetailModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" ng-value="string">Details for port: {{ ports[0].node_id }}</h4>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Transmitted Bytes (MB)</th>
+                    <th>Received Bytes (MB)</th>
+                    <th>Transmitted Packets</th>
+                    <th>Received Packets</th>
+                    <th>Receive CRC Error</th>
+                    <th>Receive Drops</th>
+                    <th>Receive Errors</th>
+                    <th>Receive Frame Error</th>
+                    <th>Receive Over-run Error</th>
+                    <th>Transmit Drops</th>
+                    <th>Transmit Errors</th>
+                  </tr>
+                  <tr>
+                    <td class="colorId">{{ Math.round(portDetails.bytes.transmitted/1000000) }}*10E6</td>
+                    <td class="colorId">{{ Math.round(portDetails.bytes.received/1000000) }}*10E6</td>
+                    <td class="colorId">{{ portDetails.packets.transmitted }}</td>
+                    <td class="colorId">{{ portDetails.packets.received }}</td>
+                    <td class="colorId">{{ portDetails["receive-crc-error"] }}</td>
+                    <td class="colorId">{{ portDetails["receive-drops"] }}</td>
+                    <td class="colorId">{{ portDetails["receive-errors"] }}</td>
+                    <td class="colorId">{{ portDetails["receive-frame-error"] }}</td>
+                    <td class="colorId">{{ portDetails["receive-over-run-error"] }}</td>
+                    <td class="colorId">{{ portDetails["transmit-drops"] }}</td>
+                    <td class="colorId">{{ portDetails["transmit-errors"] }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
   <div class="modal fade" id="portsModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" ng-value="string">Ports info for node {{ ports[0].node_id }}</h4>
-        </div>
+          <h4 class="modal-title" ng-value="string">Ports info for node: {{ ports[0].node_id }}</h4>
         <div class="modal-body">
-          <table class="table">
-            <tbody>
-              <tr>
-                <th>Filter by number: <br><input ng-model="search.ip"></th>
-                <th>Filter by mac: <br><input ng-model="search.mac_address"></th>
-                <th>Filter by name: <br><input ng-model="search.id"></th>
-                <th>Filter by state: <br><input ng-model="search.id"></th>
-              </tr>
-              <tr>
-                <th>Port Number</th>
-                <th>MAC Address</th>
-                <th>Port Name</th>
-                <th>Configuration State</th>
-              </tr>
-              <tr ng-repeat="port in ports | filter:search">
-                <td class="colorId">{{ port["flow-node-inventory:port-number"] }}</td>
-                <td class="colorId">{{ port["flow-node-inventory:hardware-address"] }}</td>
-                <td class="colorId">{{ port["flow-node-inventory:name"] }}</td>
-                <td class="colorId">{{ port["flow-node-inventory:state"]["link-down"] ? "PORT-DOWN" : "PORT-UP" }}</td>
-              </tr>
-            </tbody>
-          </table>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Port Number / Name</th>
+                    <th>MAC Address</th>
+                    <th>Configuration State</th>
+                    <th>Port Statistics</th>
+                  </tr>
+                  <tr ng-repeat="port in ports | filter:search">
+                    <td class="colorId">{{ port["flow-node-inventory:port-number"] }}: {{ port["flow-node-inventory:name"] }}</td>
+                    <td class="colorId">{{ port["flow-node-inventory:hardware-address"] }}</td>
+                    <td class="colorId">{{ port["flow-node-inventory:state"]["link-down"] ? "PORT-DOWN" : "PORT-UP" }}</td>
+                    <td> <button ng-click="showPortsDetail(port)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#portsDetailModal">Show Details</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
     </div>
@@ -45,7 +88,9 @@
         </div>
         <div class="modal-body">
           <table class="table">
-            <caption>Aggregate flow statistics</caption>
+            <label>
+              Aggregate flow statistics
+            </label>
             <tbody>
               <tr>
                 <th>Flows</th>
@@ -55,13 +100,15 @@
               <tr ng-repeat="table in tables" ng-if="table.id === 0 ">
                   <td class="colorId">{{ table["opendaylight-flow-statistics:aggregate-flow-statistics"]["flow-count"] }}</td>
                   <td class="colorId">{{ Math.round(table["opendaylight-flow-statistics:aggregate-flow-statistics"]["packet-count"]/1000000) }}*10E6</td>
-                  <td class="colorId">{{ Math.round(table["opendaylight-flow-statistics:aggregate-flow-statistics"]["byte-count"]/1000000) }}GB</td>
+                  <td class="colorId">{{ Math.round(table["opendaylight-flow-statistics:aggregate-flow-statistics"]["byte-count"]/1000000) }}MB</td>
               </tr>
               </tr>
             </tbody>
           </table>
           <table class="table">
-            <caption>Flow table statistics</caption>
+            <label>
+              Flow table statistics
+            </label>
             <tbody>
               <tr>
                 <th>Active flows</th>
