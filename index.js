@@ -304,6 +304,41 @@ app.get("/api/netfloc-nodes", function(req, res) {
 	getRequest.end();
 });
 
+app.get("/api/netfloc-flows/:id", function(req, res) {
+	console.log("/api/netfloc-flows");
+	var id = req.params.id;
+	var flows = "";
+	var getRequest = http.request({
+		host: config.netflocHost,
+		port: config.netflocPort,
+		auth: config.netflocAuth,
+		method: "GET",
+		path: "/restconf/operational/opendaylight-inventory:nodes/node/"+id+"/table/0",
+		headers: {
+			"contentType": "application/json",
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Headers": "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With",
+			"Access-Control-Allow-Methods": "GET, PUT, POST"
+      	}
+	}, function(netflocRes) {
+		netflocRes.on('data', function (chunk) {
+			flows += chunk;
+      	});
+      	netflocRes.on("error", function(err) {
+      		console.log("neutron error:res", err);
+      		res.status(500).send(err);
+      	});
+      	netflocRes.on("end", function() {
+      		res.status(200).send(flows);
+      	});
+	})
+	getRequest.on("error", function(err) {
+		console.log("netfloc error:req", err);
+		res.send(err);
+	});
+	getRequest.end();
+});
+
 
 var startServer = function() {
 	app.listen(config.guiPort, function() {

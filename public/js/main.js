@@ -72,7 +72,8 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 			serviceChainDelete: '/api/service-chain-delete',
 			neutronPorts: '/api/neutron-ports',
 			novaServers: '/api/nova-servers',
-			netflocNodes: '/api/netfloc-nodes'
+			netflocNodes: '/api/netfloc-nodes',
+			netflocFlows: '/api/netfloc-flows'
 		}
 	};
 	this.config = function(options) {
@@ -134,10 +135,16 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		});
 	};
 	this.getNodes = function() {
-	    console.log("getting nodes");
 		return $http({
 			method: "GET",
 			url: settings.url.netflocNodes,
+		});
+	};
+	this.getFlows = function(node) {
+	    console.log("getting flows");
+		return $http({
+			method: "GET",
+			url: settings.url.netflocFlows+"/"+node,
 		});
 	};
 })
@@ -368,26 +375,49 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 
 	$scope.showPorts = function(node) {
 		ports = node["node-connector"];
-		console.log("Show ports node ", ports);
 		$scope.ports = _.map(node["node-connector"], function(port){
 			port.node_id = node.id;
 			return port;
 		});
 	};
-	
+
 	$scope.showPortsDetail = function(selectedPort) {
 		p = selectedPort["opendaylight-port-statistics:flow-capable-node-connector-statistics"];
+		p.id = selectedPort.id;
 		$scope.Math = window.Math;
 		$scope.portDetails = p;
 	};
 
 	$scope.showTables = function(node) {
 		tables = node["flow-node-inventory:table"];
-		//tables = node["flow-node-inventory:table"].id == "0" ?  node["flow-node-inventory:table"].id : "";
 		console.log("Show tables node ", tables);
 		$scope.Math = window.Math;
 		$scope.tables = _.map(node["flow-node-inventory:table"], function(table){
 		 	return table;
+		});
+	};
+
+	$scope.showFlows = function(node) {
+		netfloc.getFlows(node).then(function(flows){
+			$scope.flows = _.map(flows.data["flow-node-inventory:table"][0].flow, function(flow){
+				return flow;
+			});
+		});
+	};
+
+	$scope.showFlowId = function(flow) {
+		flowId = flow.id;
+		$scope.flowId = flowId;
+	};
+
+	$scope.showFlowMatch = function(flow) {
+		flowMatch = flow.match;
+		$scope.flowMatch = flowMatch;
+	};
+
+	$scope.showFlowInstructions = function(flow) {
+		$scope.instructions = _.map(flow.instructions.instruction[0]["apply-actions"]["action"], function(instruction){
+			return instruction;
 		});
 	};
 
