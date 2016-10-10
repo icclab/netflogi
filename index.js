@@ -233,25 +233,19 @@ app.get("/api/neutron-ports", function(req, res) {
 
 app.get("/api/nova-servers", function(req, res) {
 	console.log("/api/nova-servers", req.body);
-	if (_.isUndefined(token)){
-		console.log("sending mock data", { ports: neutronPorts });
-		res.status(200).send({ ports: neutronPorts });
-		return;
-	}
 	var novaServerList = "";
 	var getRequest = http.request({
 		host: config.novaHost,
 		port: config.novaPort,
-		//auth: config.auth,
 		method: "GET",
-		path: "/0d8cd718d8524c9e82b924c6f291b3fc/servers",
+		path: "/v2/"+tenant_id+"/servers",
 		headers: {
 			'X-Auth-Token': token.access.token.id
       	}
 	}, function(novaRes) {
-		console.log("nova response");
 		novaRes.on('data', function (chunk) {
 			novaServerList += chunk;
+			console.log("nova response ", novaServerList);
       	});
       	novaRes.on("error", function(err) {
       		console.log("neutron error:res", err);
@@ -369,7 +363,9 @@ fs.readFile('config.json', function(err, file) {
 			"keystonePass",
 			"keystoneTenant",
 			"neutronHost",
-			"neutronPort"], function(err, result) {
+			"neutronPort",
+			"novaHost",
+			"novaPort"], function(err, result) {
 				config = result;
 				saveConfig(config);
 				startServer();
