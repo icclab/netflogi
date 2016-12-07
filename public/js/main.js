@@ -361,64 +361,74 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	console.log(" monitoringController");
 	$scope.introductionmonitoring="SDN monitoring";
 
-	$scope.fetchNodes = function() {
-		netfloc.getNodes().then(function(nodes){
-			console.log("netfloc-nodes", nodes.data.nodes);
-			$scope.nodes = _.map(nodes.data.nodes.node, function(node){
-				node.selected = false;
-				console.log("Netfloc node ", node);
-				return node;
+	$('.modal').on('show.bs.modal', function(event) {
+	    var idx = $('.modal:visible').length;
+	    $(this).css('z-index', 1040 + (10 * idx));
+	});
+	$('.modal').on('shown.bs.modal', function(event) {
+	    var idx = ($('.modal:visible').length) -1; // raise backdrop after animation.
+	    $('.modal-backdrop').not('.stacked').css('z-index', 1039 + (10 * idx));
+	    $('.modal-backdrop').not('.stacked').addClass('stacked');
+	});
+
+		$scope.fetchNodes = function() {
+			netfloc.getNodes().then(function(nodes){
+				console.log("netfloc-nodes", nodes.data.nodes);
+				$scope.nodes = _.map(nodes.data.nodes.node, function(node){
+					node.selected = false;
+					console.log("Netfloc node ", node);
+					return node;
+				});
 			});
-		});
-	};
-	$scope.fetchNodes();
+		};
+		$scope.fetchNodes();
 
-	$scope.showPorts = function(node) {
-		ports = node["node-connector"];
-		$scope.ports = _.map(node["node-connector"], function(port){
-			port.node_id = node.id;
-			return port;
-		});
-	};
-
-	$scope.showPortsDetail = function(selectedPort) {
-		p = selectedPort["opendaylight-port-statistics:flow-capable-node-connector-statistics"];
-		p.id = selectedPort.id;
-		$scope.Math = window.Math;
-		$scope.portDetails = p;
-	};
-
-	$scope.showTables = function(node) {
-		tables = node["flow-node-inventory:table"];
-		console.log("Show tables node ", tables);
-		$scope.Math = window.Math;
-		$scope.tables = _.map(node["flow-node-inventory:table"], function(table){
-		 	return table;
-		});
-	};
-
-	$scope.showFlows = function(node) {
-		netfloc.getFlows(node).then(function(flows){
-			$scope.flows = _.map(flows.data["flow-node-inventory:table"][0].flow, function(flow){
-				return flow;
+		$scope.showPorts = function(node) {
+			ports = node["node-connector"];
+			$scope.ports = _.map(node["node-connector"], function(port){
+				port.node_id = node.id;
+				return port;
 			});
-		});
-	};
+		};
 
-	$scope.showFlowId = function(flow) {
-		flowId = flow.id;
-		$scope.flowId = flowId;
-	};
+		$scope.showPortsDetail = function(selectedPort) {
+			p = selectedPort["opendaylight-port-statistics:flow-capable-node-connector-statistics"];
+			p.id = selectedPort.id;
+			$scope.Math = window.Math;
+			$scope.portDetails = p;
+		};
 
-	$scope.showFlowMatch = function(flow) {
-		flowMatch = flow.match;
-		$scope.flowMatch = flowMatch;
-	};
+		$scope.showTables = function(node) {
+			tables = node["flow-node-inventory:table"];
+			console.log("Show tables node ", tables);
+			$scope.Math = window.Math;
+			$scope.tables = _.map(node["flow-node-inventory:table"], function(table){
+			 	return table;
+			});
+		};
 
-	$scope.showFlowInstructions = function(flow) {
-		$scope.instructions = _.map(flow.instructions.instruction[0]["apply-actions"]["action"], function(instruction){
-			return instruction;
-		});
-	};
+		$scope.showFlows = function(node) {
+			netfloc.getFlows(node).then(function(flows){
+				$scope.flows = _.map(flows.data["flow-node-inventory:table"][0].flow, function(flow){
+					return flow;
+				});
+			});
+		};
 
-})
+		$scope.showFlowId = function(flow) {
+			flowId = flow.id;
+			$scope.flowId = flowId;
+		};
+
+		$scope.showFlowMatch = function(flow) {
+			flowMatch = flow.match;
+			$scope.flowMatch = flowMatch;
+		};
+
+		$scope.showFlowInstructions = function(flow) {
+			$scope.instructions = _.map(flow.instructions.instruction[0]["apply-actions"]["action"], function(instruction){
+				return instruction;
+			});
+		};
+
+	})
