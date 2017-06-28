@@ -177,7 +177,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 	//changed names for new setting
 	$scope.fetchVirNetFuns = function() {
 		netfloc.getVirNetFuns().then(function( virNetFuns){
-			console.log("vir-net-funs",  virNetFuns,  virNetFuns.data. virNetFuns);
+			console.log("vir-net-funs", virNetFuns.data.virNetFuns);
 			$scope.virNetFuns = _.map( virNetFuns.data.virNetFuns, function( virNetFun) {
 				virNetFun.selectedOrder = 0;
 				virNetFun.dropDownToggled = function(open) {
@@ -252,7 +252,7 @@ angular.module('app', ['ui.bootstrap', 'ngRoute'])
 		return  _.map(_.sortBy(_.filter(ports, function(port){
 			return port.selectedOrder != 0;
 		}), 'selectedOrder'), function(port){
-			return port.id;
+			return [port.ingress_port, port.egress_port];
 		});
 	};
 
